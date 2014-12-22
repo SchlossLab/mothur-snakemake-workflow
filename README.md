@@ -34,9 +34,26 @@ Overview
 How to use
 ----------
 
-* Create a new directory for your project.
 * Download the [latest release](https://github.com/SchlossLab/new_project/archive/schloss_v0.1.tar.gz) to the directory and decompress
-* Open this document in an editor. Change the first line to reflect the title of your research study, and delete the rest of the content in this file. You can, but are not obligated to keep the Acknowledgements section.
+* Rename the decompressed/untarred file to the name of your project. Move into the folder.
+* At the prompt type:
+  
+  ```
+  git init ./
+  git add .
+  git commit -m "Initial commit"
+  ```
+  
+* Go to the [SchlossLab repository](https://github.com/schlosslab) on GitHub and create a new repository with the same name
+as your folder. Click the "Create Repository" button.
+* Follow the instructions for pushing an existing repository from the command line. For example:
+
+  ```
+  git remote add origin https://github.com/SchlossLab/miseq_analysis.git
+  git push -u origin master
+  ```
+
+* Open this document (i.e. README.md) in an editor. Change the first line to reflect the title of your research study, and delete the rest of the content in this file. You can, but are not obligated to keep the Acknowledgements section.
 * Delete the LICENSE.md file, unless it will also apply to your project. (However, it probably will not to all of it.)
 * Go forth and experiment, keeping files in their appropriate places.
 
