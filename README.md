@@ -35,7 +35,7 @@ How to use
 ----------
 
 * Create a new directory for your project.
-* Clone this repository to wherever you will be working; rename the folder as appropriate
+* Download the [latest release](https://github.com/SchlossLab/new_project/archive/schloss_v0.1.tar.gz) to the directory and decompress
 * Open this document in an editor. Change the first line to reflect the title of your research study, and delete the rest of the content in this file. You can, but are not obligated to keep the Acknowledgements section.
 * Delete the LICENSE.md file, unless it will also apply to your project. (However, it probably will not to all of it.)
 * Go forth and experiment, keeping files in their appropriate places.
