@@ -37,10 +37,29 @@ Overview
 How to use
 ----------
 
-* Download the [latest release](https://github.com/SchlossLab/new_project/releases/latest) to the directory and decompress
+* Download the [latest release](https://github.com/SchlossLab/new_project/releases/latest)
+to the directory and decompress
+
 * Rename the decompressed/untarred file to the name of your project. Name the
 folder in the format `LastName_BriefDescription_Journal_Year`. For example,
 "Kozich_MiSeqSOP_AEM_2013" will work. Move into the folder.
+
+* Open this document (i.e. README.md) in an editor. Change the first line to
+reflect the title of your research study, and the content from this section to
+the end. You can, but are not obligated to keep the Acknowledgements section.
+You should keep the directory tree
+
+* In the directory tree of the README.md file, customize the comments to fit
+your project. Update this tree as the project proceeds. Replace the word `study`
+in `study.Rmd`, `study.md`, and `study.html` to be the name of your project.
+
+* At the terminal do the following (replacing `LastName_BriefDescription_Journal_Year`
+with the appropriate text...
+
+```
+mv study.Rmd LastName_BriefDescription_Journal_Year.Rmd
+mv newproject_LICENSE.md LICENSE.md
+```
 
 * At the prompt type:
 
@@ -53,30 +72,15 @@ folder in the format `LastName_BriefDescription_Journal_Year`. For example,
 * Go to the [SchlossLab repository](https://github.com/schlosslab) on GitHub and
 create a new repository with the same name as your folder. Click the "Create
 Repository" button.
-* Follow the instructions for pushing an existing repository from the command line. For example:
-
-  ```
-  git remote add origin https://github.com/SchlossLab/miseq_analysis.git
-  git push -u origin master
-  ```
-
-* Open this document (i.e. README.md) in an editor. Change the first line to
-reflect the title of your research study, and delete the rest of the content
-in this file. You can, but are not obligated to keep the Acknowledgements
-section.
-
-* In the directory tree of the README.md file, customize the comments to fit
-your project. Update this tree as the project proceeds.
-
-* Replace the word `study` in `study.Rmd`, `study.md`, and `study.html` to be
-the name of your project.
-
-* Do the following...
+* Follow the instructions for pushing an existing repository from the command line. For
+example (be sure to replace `LastName_BriefDescription_Journal_Year` with the appropriate
+text:
 
 ```
-git mv newproject_LICENSE LICENSE.md
-git commit -m "Use MIT license for project"
+git remote add origin https://github.com/SchlossLab/LastName_BriefDescription_Journal_Year.git
+git push -u origin master
 ```
+
 
 * Go forth and experiment, keeping files in their appropriate places.
 
