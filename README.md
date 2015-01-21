@@ -37,7 +37,7 @@ Overview
 How to use
 ----------
 
-* Download the [latest release](https://github.com/SchlossLab/new_project/archive/schloss_v0.1.tar.gz) to the directory and decompress
+* Download the [latest release](https://github.com/SchlossLab/new_project/releases/latest) to the directory and decompress
 * Rename the decompressed/untarred file to the name of your project. Name the
 folder in the format `LastName_BriefDescription_Journal_Year`. For example,
 "Kozich_MiSeqSOP_AEM_2013" will work. Move into the folder.
