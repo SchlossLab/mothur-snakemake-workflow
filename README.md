@@ -76,10 +76,10 @@ Repository" button.
 example (be sure to replace `LastName_BriefDescription_Journal_Year` with the appropriate
 text:
 
-```
-git remote add origin https://github.com/SchlossLab/LastName_BriefDescription_Journal_Year.git
-git push -u origin master
-```
+  ```
+  git remote add origin https://github.com/SchlossLab/LastName_BriefDescription_Journal_Year.git
+  git push -u origin master
+  ```
 
 
 * Go forth and experiment, keeping files in their appropriate places.
