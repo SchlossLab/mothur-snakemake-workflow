@@ -1,7 +1,8 @@
 Reproducible Research Project Initialization
 =======
 
-Research project initialization and organization following reproducible research guidelines.
+Research project initialization and organization following reproducible research
+guidelines as modified for use with typical microbial ecology projects
 
 Overview
 --------
@@ -16,36 +17,42 @@ Overview
     |- data            # raw and primary data, are not changed once created
     |  |- references/  # reference files to be used in analysis
     |  |- raw/         # raw data, will not be altered
-    |  +- clean/       # cleaned data, will not be altered once created
+    |  +- process/     # cleaned data, will not be altered once created
     |
     |- code/           # any programmatic code
     |- results         # all output from workflows and analyses
+    |  |- tables/      # text version of tables to be rendered with kable in R
     |  |- figures/     # graphs, likely designated for manuscript figures
     |  +- pictures/    # diagrams, images, and other non-graph graphics
     |
     |- scratch/        # temporary files that can be safely deleted or lost
     |
     |- study.Rmd       # executable Rmarkdown for this study, if applicable
-    |- Makefile        # executable Makefile for this study, if applicable
-    |- study.Rproj     # RStudio project for this study, if applicable
-    |- datapackage.json # metadata for the (input and output) data files
+    |- study.md        # Markdown (GitHub) version of the *Rmd file
+    |- study.html      # HTML version of *.Rmd file
+    |
+    +- Makefile        # executable Makefile for this study, if applicable
 
 
 How to use
 ----------
 
 * Download the [latest release](https://github.com/SchlossLab/new_project/archive/schloss_v0.1.tar.gz) to the directory and decompress
-* Rename the decompressed/untarred file to the name of your project. Move into the folder.
+* Rename the decompressed/untarred file to the name of your project. Name the
+folder in the format `LastName_BriefDescription_Journal_Year`. For example,
+"Kozich_MiSeqSOP_AEM_2013" will work. Move into the folder.
+
 * At the prompt type:
-  
+
   ```
   git init ./
   git add .
   git commit -m "Initial commit"
   ```
-  
-* Go to the [SchlossLab repository](https://github.com/schlosslab) on GitHub and create a new repository with the same name
-as your folder. Click the "Create Repository" button.
+
+* Go to the [SchlossLab repository](https://github.com/schlosslab) on GitHub and
+create a new repository with the same name as your folder. Click the "Create
+Repository" button.
 * Follow the instructions for pushing an existing repository from the command line. For example:
 
   ```
@@ -53,15 +60,38 @@ as your folder. Click the "Create Repository" button.
   git push -u origin master
   ```
 
-* Open this document (i.e. README.md) in an editor. Change the first line to reflect the title of your research study, and delete the rest of the content in this file. You can, but are not obligated to keep the Acknowledgements section.
-* Delete the LICENSE.md file, unless it will also apply to your project. (However, it probably will not to all of it.)
+* Open this document (i.e. README.md) in an editor. Change the first line to
+reflect the title of your research study, and delete the rest of the content
+in this file. You can, but are not obligated to keep the Acknowledgements
+section.
+
+* In the directory tree of the README.md file, customize the comments to fit
+your project. Update this tree as the project proceeds.
+
+* Replace the word `study` in `study.Rmd`, `study.md`, and `study.html` to be
+the name of your project.
+
+* Do the following...
+
+```
+git mv newproject_LICENSE LICENSE.md
+git commit -m "Use MIT license for project"
+```
+
 * Go forth and experiment, keeping files in their appropriate places.
 
-To the extent possible under law, the author(s) of this template have dedicated all copyright and related and neighboring rights to it to the public domain worldwide under the [CC0 Public Domain Dedication]. The template and all other content in the [rr-init repository] is distributed without any warranty.
+* You will want to update this page as you go through your work. It is likely
+that you'll need to provide a link to the published paper, a brief description
+of the study, and instructions for how to generate the paper.
 
 
 Key concepts and goals
 ----------------------
+
+To the extent possible under law, the author(s) of this template have dedicated
+all copyright and related and neighboring rights to it to the public domain
+worldwide under the [CC0 Public Domain Dedication]. The template and all other
+content in the [rr-init repository] is distributed without any warranty.
 
 See [Noble 2009] for a full description of and argument for the principle template structure. Some concepts and goals that guided this work:
 * (Good) There is a folder for the raw data, which do not get altered, or intermixed with data that is the result of manual or programmatic manipulation. I.e., derived data is kept separate from raw data, and raw data are not duplicated.
