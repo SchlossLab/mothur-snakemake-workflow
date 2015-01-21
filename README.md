@@ -56,10 +56,10 @@ in `study.Rmd`, `study.md`, and `study.html` to be the name of your project.
 * At the terminal do the following (replacing `LastName_BriefDescription_Journal_Year`
 with the appropriate text...
 
-```
+  ```
   mv study.Rmd LastName_BriefDescription_Journal_Year.Rmd
   mv newproject_LICENSE.md LICENSE.md
-```
+  ```
 
 * At the prompt type:
 
