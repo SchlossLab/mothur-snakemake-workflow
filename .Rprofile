@@ -18,3 +18,5 @@ cat('Project home directory is available as PROJHOME or via get("PROJHOME","RPRO
 
 rm(RPROJ)
 ############################################################
+
+options("repos" = c(CRAN = "http://cran.rstudio.com/"))
