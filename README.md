@@ -17,7 +17,9 @@ Overview
     |- data            # raw and primary data, are not changed once created
     |  |- references/  # reference files to be used in analysis
     |  |- raw/         # raw data, will not be altered
-    |  +- process/     # cleaned data, will not be altered once created
+    |  |- mothur/      # mothur processed data
+    |  +- process/     # cleaned data, will not be altered once created;
+    |                  # will be committed to repo
     |
     |- code/           # any programmatic code
     |- results         # all output from workflows and analyses
