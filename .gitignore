@@ -3,7 +3,8 @@
 .RData
 
 
-data/
+data/*/*
+!README.md
 
 *.qsub*
 mothur*logfile
