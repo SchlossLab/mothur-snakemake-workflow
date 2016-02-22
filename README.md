@@ -8,8 +8,9 @@ Overview
 --------
 
     project
-    |- README          # the top level description of content
-    |
+    |- README          # the top level description of content (this doc)
+    |- CONTRIBUTING    # instructions for how to contribute to your project
+	|
     |- doc/            # documentation for the study
     |  |- notebook/    # preliminary analyses (dead branches of analysis)
     |  +- paper/       # manuscript(s), whether generated or not
