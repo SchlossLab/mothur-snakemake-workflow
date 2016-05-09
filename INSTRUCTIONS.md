@@ -100,6 +100,15 @@ As each project is developed, the lead author should approach the project from t
 See [Noble 2009] for a general description of and argument for the principle template structure. Some concepts and goals that guided this work.
 
 
+Resources
+---------
+
+* [RMarkdown and knitr](http://rmarkdown.rstudio.com)
+* [GNU Make](http://swcarpentry.github.io/make-novice/)
+* [git](http://swcarpentry.github.io/git-novice/)
+
+
+
 Acknowledgements
 ----------------
 
