@@ -12,32 +12,7 @@ geometry: margin=1.0in
 ---
 
 
-```{r knitr_settings, eval=TRUE, echo=FALSE, cache=FALSE}
-opts_chunk$set("tidy" = TRUE)
-opts_chunk$set("echo" = FALSE)
-opts_chunk$set("eval" = TRUE)
-opts_chunk$set("warning" = FALSE)
-opts_chunk$set("cache" = FALSE)
 
-inline_hook <- function(x){
-	print(x)
-
-	if(is.list(x)){
-		x <- unlist(x)
-	}
-
-	if(is.numeric(x)){
-		if(abs(x - round(x)) < .Machine$double.eps^0.5){
-			paste(format(x,big.mark=',', digits=0, scientific=FALSE))
-		} else {
-			paste(format(x,big.mark=',', digits=1, nsmall=1, scientific=FALSE))
-		}
-	} else {
-    	paste(x)      
-	}
-}
-knitr::knit_hooks$set(inline=inline_hook)
-```
 
 
 

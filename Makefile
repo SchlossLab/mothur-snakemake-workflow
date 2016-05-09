@@ -84,18 +84,16 @@ $(REFS)/trainset14_032015.% :
 ################################################################################
 
 
-submission/study.% : 			\ #include data files that are needed for paper
-						peerj.csl\
-						references.bib\
-						study.Rmd
-	R -e 'render("study.Rmd", clean=FALSE)'
-	mv study.knit.md $@
-	rm study.utf8.md
-	mv study.pdf submission/study.pdf
-	mv study.tex submission/study.tex
+$(FINAL)/study.% : 			\ #include data files that are needed for paper
+						$(FINAL)/peerj.csl\
+						$(FINAL)/references.bib\
+						$(FINAL)/study.Rmd
+	R -e 'render("$(FINAL)/study.Rmd", clean=FALSE)'
+	mv $(FINAL)/study.knit.md $@
+	rm $(FINAL)/study.utf8.md
 
 write.paper : $(TABLES)/table_1.pdf $(TABLES)/table_2.pdf\ #customize to include
 				$(FIGS)/figure_1.pdf $(FIGS)/figure_2.pdf\	# appropriate tables and
 				$(FIGS)/figure_3.pdf $(FIGS)/figure_4.pdf\	# figures
-				submission/study.Rmd submission/study.md\
-				submission/study.tex submission/study.pdf
+				$(FINAL)/study.Rmd $(FINAL)/study.md\
+				$(FINAL)/study.tex $(FINAL)/study.pdf
