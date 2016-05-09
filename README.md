@@ -10,10 +10,11 @@ Overview
     project
     |- README          # the top level description of content (this doc)
     |- CONTRIBUTING    # instructions for how to contribute to your project
-	|
-    |- doc/            # documentation for the study
-    |  |- notebook/    # preliminary analyses (dead branches of analysis)
-    |  +- paper/       # manuscript(s), whether generated or not
+		|
+		|- submission/
+    |  |- study.Rmd    # executable Rmarkdown for this study, if applicable
+    |  |- study.md     # Markdown (GitHub) version of the *.Rmd file
+    |  +- study.html   # HTML version of *.Rmd file
     |
     |- data            # raw and primary data, are not changed once created
     |  |- references/  # reference files to be used in analysis
@@ -23,16 +24,15 @@ Overview
     |                  # will be committed to repo
     |
     |- code/           # any programmatic code
+		|
     |- results         # all output from workflows and analyses
     |  |- tables/      # text version of tables to be rendered with kable in R
     |  |- figures/     # graphs, likely designated for manuscript figures
     |  +- pictures/    # diagrams, images, and other non-graph graphics
     |
-    |- scratch/        # temporary files that can be safely deleted or lost
-    |
-    |- study.Rmd       # executable Rmarkdown for this study, if applicable
-    |- study.md        # Markdown (GitHub) version of the *Rmd file
-    |- study.html      # HTML version of *.Rmd file
+    |- exploratory/    # exploratory data analysis for study
+    |  |- notebook/    # preliminary analyses
+    |  +- scratch/     # temporary files that can be safely deleted or lost
     |
     +- Makefile        # executable Makefile for this study, if applicable
 
@@ -60,7 +60,7 @@ in `study.Rmd`, `study.md`, and `study.html` to be the name of your project.
 with the appropriate text...
 
   ```
-  mv study.Rmd LastName_BriefDescription_Journal_Year.Rmd
+  mv submission/study.Rmd submission/LastName_BriefDescription_Journal_Year.Rmd
   mv newproject_LICENSE.md LICENSE.md
   ```
 
