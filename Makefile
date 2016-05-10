@@ -63,6 +63,51 @@ $(REFS)/trainset14_032015.% :
 #
 ################################################################################
 
+# Change gf_cdiff to the * part of your *.files file that lives in data/raw/
+BASIC_STEM = data/mothur/gf_cdiff.trim.contigs.good.unique.good.filter.unique.precluster
+
+
+# here we go from the raw fastq files and the files file to generate a fasta,
+# taxonomy, and count_table file that has had the chimeras removed as well as
+# any non bacterial sequences.
+
+# Edit code/get_good_seqs.batch to include the proper name of your *files file
+$(BASIC_STEM).denovo.uchime.pick.pick.count_table $(BASIC_STEM).pick.pick.fasta $(BASIC_STEM).pick.v4.wang.pick.taxonomy : code/get_good_seqs.batch\
+					data/references/silva.v4.align\
+					data/references/trainset14_032015.pds.fasta\
+					data/references/trainset14_032015.pds.tax
+	mothur code/get_good_seqs.batch;\
+	rm data/process/*.map
+
+
+
+# here we go from the good sequences and generate a shared file and a
+# cons.taxonomy file based on OTU data
+
+# Edit code/get_shared_otus.batch to include the proper root name of your files file
+# Edit code/get_shared_otus.batch to include the proper group names to remove
+
+$(BASIC_STEM).pick.pick.pick.an.unique_list.shared $(BASIC_STEM).pick.pick.pick.an.unique_list.0.03.cons.taxonomy : code/get_shared_otus.batch\
+					$(BASIC_STEM).denovo.uchime.pick.pick.count_table\
+					$(BASIC_STEM).pick.pick.fasta\
+					$(BASIC_STEM).pick.v4.wang.pick.taxonomy
+	mothur code/get_shared_otus.batch
+	rm $(BASIC_STEM).denovo.uchime.pick.pick.pick.count_table
+	rm $(BASIC_STEM).pick.pick.pick.fasta
+	rm $(BASIC_STEM).pick.v4.wang.pick.pick.taxonomy;
+
+
+# now we want to get the sequencing error as seen in the mock community samples
+
+# Edit code/get_error.batch to include the proper root name of your files file
+# Edit code/get_error.batch to include the proper group names for your mocks
+
+$(BASIC_STEM).pick.pick.pick.error.summary : code/get_error.batch\
+					$(BASIC_STEM).denovo.uchime.pick.pick.count_table\
+					$(BASIC_STEM).pick.pick.fasta\
+					$(REFS)HMP_MOCK.v4.fasta
+	mothur code/get_error.batch
+
 
 
 ################################################################################
