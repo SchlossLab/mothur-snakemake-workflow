@@ -53,9 +53,14 @@ likely that you'll need to provide a link to the published paper, the title, the
 * Once you understand all of this, you can run
 
   ```
-	git rm INSTRUCTIONS.md
+  git rm INSTRUCTIONS.md
   git commit -m "Remove instructions document"
 	```
+
+Citations
+----------------------
+
+You should obviously think about where you want your work published. Various formatting files are available as `csl` files that will play nicely with rmakrdown, Word, and LaTeX. You can find these files at the [CSL GitHub repository](https://github.com/citation-style-language/styles). As an example, we commonly use style guides for the [ASM Journals](https://github.com/citation-style-language/styles/search?q=asm&type=Code&utf8=✓)
 
 
 
