@@ -1,4 +1,5 @@
-make.contigs(file=gf_cdiff.files, inputdir=data/raw/, outputdir=data/mothur/, processors=8, rename=F)
+make.file(inputdir=data/raw, type=gz, prefix=stability)
+make.contigs(file=current, inputdir=data/raw/, outputdir=data/mothur/, processors=8, rename=F)
 screen.seqs(fasta=current, group=current, maxambig=0, maxlength=275, maxhomop=8)
 unique.seqs(fasta=current)
 count.seqs(name=current, group=current, processors=4)
