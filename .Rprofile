@@ -2,6 +2,13 @@
 ## Options for knitr and Rmarkdown rendering
 ############################################################
 
+if(!"knitr" %in% installed.packages()[,'Package']){
+	install.packages('knitr')
+}
+if(!"rmarkdown" %in% installed.packages()[,'Package']){
+	install.packages('rmarkdown')
+}
+
 library("knitr")
 library("rmarkdown")
 

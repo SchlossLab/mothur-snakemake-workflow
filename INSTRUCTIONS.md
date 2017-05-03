@@ -16,14 +16,11 @@ the end. You can, but are not obligated to keep the Acknowledgements section.
 You should keep the directory tree
 
 * In the directory tree of the README.md file, customize the comments to fit
-your project. Update this tree as the project proceeds. Replace the word `study`
-in `study.Rmd`, `study.md`, `study.tex`, and `study.pdf` to be the name of your project.
+your project. Update this tree as the project proceeds.
 
-* At the terminal do the following (replacing `LastName_BriefDescription_Journal_Year`
-with the appropriate text...
+* At the terminal do the following to replace the license for the template's repository with the license for your project
 
   ```
-  mv submission/study.Rmd submission/LastName_BriefDescription_Journal_Year.Rmd
   mv newproject_LICENSE.md LICENSE.md
   ```
 
