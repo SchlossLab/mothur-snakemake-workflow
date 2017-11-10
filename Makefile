@@ -72,7 +72,7 @@ BASIC_STEM = data/mothur/stability.trim.contigs.good.unique.good.filter.unique.p
 # any non bacterial sequences.
 
 # Edit code/get_good_seqs.batch to include the proper name of your *files file
-$(BASIC_STEM).denovo.uchime.pick.pick.count_table $(BASIC_STEM).pick.pick.fasta $(BASIC_STEM).pick.v4.wang.pick.taxonomy : code/get_good_seqs.batch\
+$(BASIC_STEM).denovo.uchime.pick.pick.count_table $(BASIC_STEM).pick.pick.fasta $(BASIC_STEM).pick.pds.wang.pick.taxonomy : code/get_good_seqs.batch\
 					data/references/silva.v4.align\
 					data/references/trainset14_032015.pds.fasta\
 					data/references/trainset14_032015.pds.tax
@@ -90,11 +90,11 @@ $(BASIC_STEM).denovo.uchime.pick.pick.count_table $(BASIC_STEM).pick.pick.fasta 
 $(BASIC_STEM).pick.pick.pick.opti.unique_list.shared $(BASIC_STEM).pick.pick.pick.opti.unique_list.0.03.cons.taxonomy : code/get_shared_otus.batch\
 					$(BASIC_STEM).denovo.uchime.pick.pick.count_table\
 					$(BASIC_STEM).pick.pick.fasta\
-					$(BASIC_STEM).pick.v4.wang.pick.taxonomy
+					$(BASIC_STEM).pick.pds.wang.pick.taxonomy
 	mothur code/get_shared_otus.batch
 	rm $(BASIC_STEM).denovo.uchime.pick.pick.pick.count_table
 	rm $(BASIC_STEM).pick.pick.pick.fasta
-	rm $(BASIC_STEM).pick.v4.wang.pick.pick.taxonomy;
+	rm $(BASIC_STEM).pick.pds.wang.pick.pick.taxonomy;
 
 
 # now we want to get the sequencing error as seen in the mock community samples
