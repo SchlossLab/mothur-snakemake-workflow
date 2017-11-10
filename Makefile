@@ -87,7 +87,7 @@ $(BASIC_STEM).denovo.uchime.pick.pick.count_table $(BASIC_STEM).pick.pick.fasta 
 # Edit code/get_shared_otus.batch to include the proper root name of your files file
 # Edit code/get_shared_otus.batch to include the proper group names to remove
 
-$(BASIC_STEM).pick.pick.pick.opti.unique_list.shared $(BASIC_STEM).pick.pick.pick.opti.unique_list.0.03.cons.taxonomy : code/get_shared_otus.batch\
+$(BASIC_STEM).pick.pick.pick.opti_mcc.unique_list.shared $(BASIC_STEM).pick.pick.pick.opti_mcc.unique_list.0.03.cons.taxonomy : code/get_shared_otus.batch\
 					$(BASIC_STEM).denovo.uchime.pick.pick.count_table\
 					$(BASIC_STEM).pick.pick.fasta\
 					$(BASIC_STEM).pick.pds.wang.pick.taxonomy
