@@ -51,7 +51,10 @@ YOUR PAPER'S ABSTRACT GOES HERE
 * Gnu Make should be located in the user's PATH
 * mothur (v1.XX.0) should be located in the user's PATH
 * R (v. 3.X.X) should be located in the user's PATH
-* etc.
+* R packcages:
+  * `knitr`
+  * `rmarkdown`
+* etc
 
 
 #### Running analysis
