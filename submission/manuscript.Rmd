@@ -6,6 +6,7 @@ output:
     keep_tex: true
     includes:
       in_header: header.tex
+  md_document: default
 csl: mbio.csl #Get themes at https://github.com/citation-style-language/styles
 fontsize: 11pt
 geometry: margin=1.0in
