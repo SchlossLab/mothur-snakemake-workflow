@@ -63,7 +63,7 @@ $(REFS)/trainset14_032015.% :
 #
 ################################################################################
 
-# Change gf_cdiff to the * part of your *.files file that lives in data/raw/
+# Change stability to the * part of your *.files file that lives in data/raw/
 BASIC_STEM = data/mothur/stability.trim.contigs.good.unique.good.filter.unique.precluster
 
 
@@ -129,14 +129,15 @@ $(BASIC_STEM).pick.pick.pick.error.summary : code/get_error.batch\
 ################################################################################
 
 
-$(FINAL)/study.% : 			\ #include data files that are needed for paper
+$(FINAL)/manuscript.% : 			\ #include data files that are needed for paper
 						$(FINAL)/mbio.csl\
 						$(FINAL)/references.bib\
 						$(FINAL)/manuscript.Rmd
 	R -e 'render("$(FINAL)/manuscript.Rmd", output_format ='all')'
 
+
 write.paper : $(TABLES)/table_1.pdf $(TABLES)/table_2.pdf\ #customize to include
 				$(FIGS)/figure_1.pdf $(FIGS)/figure_2.pdf\	# appropriate tables and
 				$(FIGS)/figure_3.pdf $(FIGS)/figure_4.pdf\	# figures
-				$(FINAL)/study.Rmd $(FINAL)/study.md\
-				$(FINAL)/study.tex $(FINAL)/study.pdf
+				$(FINAL)/manuscript.Rmd $(FINAL)/manuscript.md\
+				$(FINAL)/manuscript.tex $(FINAL)/manuscript.pdf
