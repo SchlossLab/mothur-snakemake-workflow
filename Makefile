@@ -105,7 +105,7 @@ $(BASIC_STEM).pick.pick.pick.opti.unique_list.shared $(BASIC_STEM).pick.pick.pic
 $(BASIC_STEM).pick.pick.pick.error.summary : code/get_error.batch\
 					$(BASIC_STEM).denovo.uchime.pick.pick.count_table\
 					$(BASIC_STEM).pick.pick.fasta\
-					$(REFS)HMP_MOCK.v4.fasta
+					$(REFS)/HMP_MOCK.v4.fasta
 	mothur code/get_error.batch
 
 
