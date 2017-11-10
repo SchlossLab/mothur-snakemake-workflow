@@ -64,7 +64,7 @@ $(REFS)/trainset14_032015.% :
 ################################################################################
 
 # Change gf_cdiff to the * part of your *.files file that lives in data/raw/
-BASIC_STEM = data/mothur/gf_cdiff.trim.contigs.good.unique.good.filter.unique.precluster
+BASIC_STEM = data/mothur/stability.trim.contigs.good.unique.good.filter.unique.precluster
 
 
 # here we go from the raw fastq files and the files file to generate a fasta,
@@ -87,7 +87,7 @@ $(BASIC_STEM).denovo.uchime.pick.pick.count_table $(BASIC_STEM).pick.pick.fasta 
 # Edit code/get_shared_otus.batch to include the proper root name of your files file
 # Edit code/get_shared_otus.batch to include the proper group names to remove
 
-$(BASIC_STEM).pick.pick.pick.an.unique_list.shared $(BASIC_STEM).pick.pick.pick.an.unique_list.0.03.cons.taxonomy : code/get_shared_otus.batch\
+$(BASIC_STEM).pick.pick.pick.opti.unique_list.shared $(BASIC_STEM).pick.pick.pick.opti.unique_list.0.03.cons.taxonomy : code/get_shared_otus.batch\
 					$(BASIC_STEM).denovo.uchime.pick.pick.count_table\
 					$(BASIC_STEM).pick.pick.fasta\
 					$(BASIC_STEM).pick.v4.wang.pick.taxonomy
@@ -130,12 +130,12 @@ $(BASIC_STEM).pick.pick.pick.error.summary : code/get_error.batch\
 
 
 $(FINAL)/study.% : 			\ #include data files that are needed for paper
-						$(FINAL)/peerj.csl\
+						$(FINAL)/mbio.csl\
 						$(FINAL)/references.bib\
-						$(FINAL)/study.Rmd
-	R -e 'render("$(FINAL)/study.Rmd", clean=FALSE)'
-	mv $(FINAL)/study.knit.md $@
-	rm $(FINAL)/study.utf8.md
+						$(FINAL)/manuscript.Rmd
+	R -e 'render("$(FINAL)/manuscript.Rmd", clean=FALSE)'
+	mv $(FINAL)/manuscript.knit.md $@
+	rm $(FINAL)/manuscript.utf8.md
 
 write.paper : $(TABLES)/table_1.pdf $(TABLES)/table_2.pdf\ #customize to include
 				$(FIGS)/figure_1.pdf $(FIGS)/figure_2.pdf\	# appropriate tables and
