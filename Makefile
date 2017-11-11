@@ -129,11 +129,13 @@ $(BASIC_STEM).pick.pick.pick.error.summary : code/get_error.batch\
 ################################################################################
 
 
-$(FINAL)/manuscript.% : 			\ #include data files that are needed for paper
+$(FINAL)/manuscript.% : 			\ #include data files that are needed for paper don't leave this line with a : \
 						$(FINAL)/mbio.csl\
 						$(FINAL)/references.bib\
 						$(FINAL)/manuscript.Rmd
-	R -e 'render("$(FINAL)/manuscript.Rmd", output_format ='all')'
+	R -e 'render("$(FINAL)/manuscript.Rmd", clean=FALSE)'
+	mv $(FINAL)/manuscript.knit.md submission/manuscript.md
+	rm $(FINAL)/manuscript.utf8.md
 
 
 write.paper : $(TABLES)/table_1.pdf $(TABLES)/table_2.pdf\ #customize to include
