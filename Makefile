@@ -14,6 +14,10 @@ FINAL = submission/
 print-%:
 	@echo '$*=$($*)'
 
+MAKEFLAGS += --warn-undefined-variables
+SHELL := bash
+.SHELLFLAGS := -eu -o pipefail
+
 
 
 ################################################################################
