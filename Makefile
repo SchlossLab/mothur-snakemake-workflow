@@ -14,18 +14,16 @@ FINAL = submission/
 print-%:
 	@echo '$*=$($*)'
 
-MAKEFLAGS += --warn-undefined-variables
-SHELL := bash
-.SHELLFLAGS := -eu -o pipefail
-
-
 
 ################################################################################
 #
 # Part 1: Get the references
 #
 # We will need several reference files to complete the analyses including the
-# SILVA reference alignment and RDP reference taxonomy.
+# SILVA reference alignment and RDP reference taxonomy. Note that this code
+# assumes that mothur is in your PATH. If not (e.g. it's in code/mothur/, you
+# will need to replace `mothur` with `code/mothur/mothur` throughout the
+# following code.
 #
 ################################################################################
 
@@ -53,14 +51,14 @@ $(REFS)/silva.v4.align : $(REFS)/silva.seed.align
 
 $(REFS)/trainset14_032015.% :
 	wget -N http://www.mothur.org/w/images/8/88/Trainset14_032015.pds.tgz
-	tar xvzf Trainset14_032015.pds.tgz trainset14_032015.pds/trainset14_032015.pds.*
+	tar xvzf Trainset14_032015.pds.tgz trainset14_032015.pds
 	mv trainset14_032015.pds/* $(REFS)/
-	rmdir trainset14_032015.pds
+	rm -rf trainset14_032015.pds
 	rm Trainset14_032015.pds.tgz
 
 ################################################################################
 #
-# Part 2: Run data through mothur
+# Part 2: Get and run data through mothur
 #
 #	Process fastq data through the generation of files that will be used in the
 # overall analysis.
