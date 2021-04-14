@@ -1,44 +1,61 @@
 ---
-title: "**NAME OF THIS STUDY**"
-bibliography: references.bib
 output:
+  word_document: default
   pdf_document:
     keep_tex: true
-    includes:
-      in_header: header.tex
-csl: mbio.csl #Get themes at https://github.com/citation-style-language/styles
-fontsize: 11pt
 geometry: margin=1.0in
+font-size: 11pt
+header-includes:
+  - \usepackage{helvet}
+  - \renewcommand*\familydefault{\sfdefault}
+  - \usepackage{setspace}
+  - \doublespacing
+  - \usepackage[left]{lineno}
+  - \linenumbers
+  - \raggedright
+editor_options:
+  chunk_output_type: console
+bibliography: references.bib
+csl: asm.csl
 ---
 
+```{r, echo=FALSE}
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(knitr))
+suppressPackageStartupMessages(library(here))
 
-```{r knitr_settings, eval=TRUE, echo=FALSE, cache=FALSE}
-opts_chunk$set("tidy" = TRUE)
-opts_chunk$set("echo" = FALSE)
-opts_chunk$set("eval" = TRUE)
-opts_chunk$set("warning" = FALSE)
-opts_chunk$set("cache" = FALSE)
+opts_chunk$set(echo = FALSE)
 
 inline_hook <- function(x){
-	print(x)
-
-	if(is.list(x)){
-		x <- unlist(x)
-	}
 
 	if(is.numeric(x)){
-		if(abs(x - round(x)) < .Machine$double.eps^0.5){
-			paste(format(x,big.mark=',', digits=0, scientific=FALSE))
+		if(abs(x - round(x)) < .Machine$double.eps){
+			# treat as integer
+			formatted <- format(x, digits=0, big.mark = ",")
+
 		} else {
-			paste(format(x,big.mark=',', digits=1, nsmall=1, scientific=FALSE))
+			# treat as floating point number
+			formatted <- format(x, digits=2, nsmall=2, big.mark = ",")
 		}
 	} else {
-    	paste(x)      
+		formatted <-x
 	}
+
+  formatted
+
 }
-knitr::knit_hooks$set(inline=inline_hook)
+
+
+knit_hooks$set(inline=inline_hook)
+
+format_pct <- function(x, my_digits=1){
+
+	format(x, digits=my_digits, nsmall=my_digits)
+
+}
 ```
 
+# YOUR TITLE GOES HERE - LEAVE THE # AT THE START OF THE LINE
 
 
 \vspace{35mm}
