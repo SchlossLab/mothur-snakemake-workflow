@@ -128,7 +128,7 @@ rule process_data:
         """
         mothur '#set.logfile(name={log});
             set.dir(input={params.inputdir}, output={params.workdir});
-            make.file(inputdir={params.inputdir}, prefix={wildcards.dataset});
+            make.file(inputdir={params.inputdir}, type=fastq, prefix={wildcards.dataset});
             rename.file(input={params.files}, new={output.files});
             make.contigs(inputdir={params.inputdir}, file={output.files}, processors={resources.procs});
             set.dir(input={params.workdir}, output={params.workdir});
