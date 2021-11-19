@@ -20,37 +20,6 @@ rule targets:
         'results/stability.opti_mcc.shared'
 
 
-rule download_demo_data:
-    output:
-        zip=temp("data/raw/miseqsopdata.zip")
-    params:
-        outdir="data/raw/"
-    shell:
-        """
-        wget -N -P {params.outdir} https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
-        unzip {output.zip} -d {params.outdir}
-        mv {params.outdir}/MiSeq_SOP/*.fast* {params.outdir}
-        rm -rf {params.outdir}/__MACOSX
-        rm -rf {params.outdir}/MiSeq_SOP
-        """
-
-
-rule download_sra_data: 
-    input:
-        txt="data/SRR_Acc_List.txt"
-    output:
-        fastq=expand("data/raw/{{SRA}}_{i}.fastq", i=(1,2))
-    params:
-        sra="{SRA}",
-        outdir="data/raw"
-    shell:
-        """
-        #source /etc/profile.d/http_proxy.sh  # required for internet on the Great Lakes cluster
-        prefetch {params.sra}
-        fasterq-dump --split-files {params.sra} -O {params.outdir}
-        """
-
-
 rule download_silva:
     output:
         tar=temp(f"data/references/silva.seed_v{silva_version}.tgz"),
@@ -114,9 +83,48 @@ rule download_rdp:
         rm -rf {params.outdir}/trainset18_*.pds/
         """
 
+checkpoint download_demo_data:
+    output:
+        zip=temp("data/miseqsopdata.zip"),
+        outdir=directory("data/raw/")
+    shell:
+        """
+        wget -N -P data/ https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
+        unzip {output.zip} -d {output.outdir}
+        mv {output.outdir}/MiSeq_SOP/*.fast* {output.outdir}
+        rm -rf {output.outdir}/__MACOSX
+        rm -rf {output.outdir}/MiSeq_SOP
+        """
+
+
+rule download_sra_data: # this will only run if you edit `process_data` to use these output files
+    input:
+        txt="data/SRR_Acc_List.txt"
+    output:
+        fastq=expand("data/raw/{{SRA}}_{i}.fastq", i=(1,2))
+    params:
+        sra="{SRA}",
+        outdir="data/raw"
+    shell:
+        """
+        #source /etc/profile.d/http_proxy.sh  # required for internet on the Great Lakes cluster
+        prefetch {params.sra}
+        fasterq-dump --split-files {params.sra} -O {params.outdir}
+        """
+
+
+def list_demo_fastq(wildcards):
+    checkpoint_output = checkpoints.download_demo_data.get(**wildcards).output.outdir
+    new_wildcards = glob_wildcards("data/raw/{sample}_L001_R{read}_001.fastq")
+    return expand("data/raw/{sample}_L001_R{read}_001.fastq", 
+                  sample = new_wildcards.sample,
+                  read = new_wildcards.read)
+
+
 rule process_data:
     input:
         #fastq=expand("data/raw/{SRA}_{i}.fastq", SRA = sra_list, i = [1,2]),
+        fastq=list_demo_fastq,
         silva_v4=rules.process_silva.output.v4,
         rdp_fasta=rules.download_rdp.output.fasta,
         rdp_tax=rules.download_rdp.output.tax
@@ -246,6 +254,7 @@ rule render_readme:
         Rmd="README.Rmd",
         R="code/R/render-rmd.R"
     output:
-        md="README.md"
+        md="README.md",
+        html=temp('README.html')
     script:
         "code/R/render-rmd.R"
