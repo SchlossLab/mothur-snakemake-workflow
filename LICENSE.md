@@ -46,7 +46,7 @@ license terms.
 Under the following terms:
 
 * **Attribution**---You must give appropriate credit (mentioning that your work
-  is derived from work that is Copyright © the FIRST_AUTHOR_LASTNAME _et al_.
+  is derived from work that is Copyright © FIRST_AUTHOR_LASTNAME _et al_.
   and, where practical, linking to GITHUB_URL),
   provide a [link to the license][cc-by-human], and indicate if changes were
   made. You may do so in any reasonable manner, but not in any way that suggests
