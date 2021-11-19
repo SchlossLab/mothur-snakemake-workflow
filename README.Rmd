@@ -37,21 +37,22 @@ R packages:
 If you re-use this template for a real project, you'll need to fill in some
 information in the following files:
 
-- `LICENSE.md`
+- [LICENSE.md](LICENSE.md)
     - `YEAR`
     - `AUTHORS`
     - `FIRST_AUTHOR_LASTNAME`
     - `GITHUB_URL`
-- `MiSeq-SOP-demo.Rproj` - rename this file to match your project.
-- `paper/head.tex`
+- [MiSeq-SOP-demo.Rproj](MiSeq-SOP-demo.Rproj) - rename this file to match your project.
+- [paper/head.tex](paper/head.tex)
     - `RUNNING TITLE`
     - `FIRST AUTHOR LASTNAME`
     - `AUTHORS AND AFFILIATIONS`
-- `paper/paper.Rmd`
+- [paper/paper.Rmd](paper/paper.Rmd)
     - `TITLE`
-    - Write the actual text of your paper 🤓
-- `paper/references.bib` - export your references from Zotero (or other reference manager) to this file.
-- `README.Rmd`
+    - Write the actual text of your paper. 🤓
+- [paper/references.bib](paper/references.bib) - export your references from Zotero (or other reference manager) to this bibtex file.
+- README.md - don't edit this by and, it's created by knitting [README.Rmd](README.Rmd).
+- [README.Rmd](README.Rmd).
     - `MiSeq-SOP-demo` - your project slug.
     - Change the text as you see fit to explain your project.
 
