@@ -1,0 +1,65 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# MiSeq-SOP-demo
+
+<!-- badges: start -->
+[![build](https://github.com/SchlossLab/MiSeq-SOP-demo/actions/workflows/build.yml/badge.svg)](https://github.com/SchlossLab/MiSeq-SOP-demo/actions/workflows/build.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SchlossLab/MiSeq-SOP-demo/blob/main/LICENSE.md)
+<!-- badges: end -->
+
+
+## Dependencies
+
+- mothur
+- R
+- snakemake
+
+R packages:
+
+- here
+- schtools
+- tidyverse
+
+
+## Re-using this template
+
+If you re-use this template for a real project, you'll need to fill in some
+information in the following files:
+
+- `LICENSE.md`
+    - `YEAR`
+    - `AUTHORS`
+    - `FIRST_AUTHOR_LASTNAME`
+    - `GITHUB_URL`
+- `MiSeq-SOP-demo.Rproj` - rename this file to match your project.
+- `paper/head.tex`
+    - `RUNNING TITLE`
+    - `FIRST AUTHOR LASTNAME`
+    - `AUTHORS AND AFFILIATIONS`
+- `paper/paper.Rmd`
+    - `TITLE`
+    - Write the actual text of your paper 🤓
+- `paper/references.bib`
+    - Export your references from Zotero (or other reference manager) to this file.
+- `README.Rmd`
+    - `MiSeq-SOP-demo` - your project slug.
+    - Change the text as you see fit to explain your project.
+
+
+## Directory Structure
+
+```{bash tree, echo = FALSE, comment = ""}
+tree -L 2
+```
+

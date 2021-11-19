@@ -1,65 +1,102 @@
-Please see INSTRUCTIONS.md before proceeding!
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## TITLE OF YOUR PAPER GOES HERE
+# MiSeq-SOP-demo
 
-YOUR PAPER'S ABSTRACT GOES HERE
+<!-- badges: start -->
 
+[![build](https://github.com/SchlossLab/MiSeq-SOP-demo/actions/workflows/build.yml/badge.svg)](https://github.com/SchlossLab/MiSeq-SOP-demo/actions/workflows/build.yml)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/SchlossLab/MiSeq-SOP-demo/blob/main/LICENSE.md)
+<!-- badges: end -->
 
+## Dependencies
 
+-   mothur
+-   R
+-   snakemake
 
-### Overview
+R packages:
 
-	project
-	|- README          # the top level description of content (this doc)
-	|- CONTRIBUTING    # instructions for how to contribute to your project
-	|- LICENSE         # the license for this project
-	|
-	|- submission/
-	| |- study.Rmd    # executable Rmarkdown for this study, if applicable
-	| |- study.md     # Markdown (GitHub) version of the *.Rmd file
-	| |- study.tex    # TeX version of *.Rmd file
-	| |- study.pdf    # PDF version of *.Rmd file
-	| |- header.tex   # LaTeX header file to format pdf version of manuscript
-	| |- references.bib # BibTeX formatted references
-	| |- XXXX.csl     # csl file to format references for journal XXX
-	|
-	|- data           # raw and primary data, are not changed once created
-	| |- references/  # reference files to be used in analysis
-	| |- raw/         # raw data, will not be altered
-	| |- mothur/      # mothur processed data
-	| +- process/     # cleaned data, will not be altered once created;
-	|                 # will be committed to repo
-	|
-	|- code/          # any programmatic code
-	|
-	|- results        # all output from workflows and analyses
-	| |- tables/      # text version of tables to be rendered with kable in R
-	| |- figures/     # graphs, likely designated for manuscript figures
-	| +- pictures/    # diagrams, images, and other non-graph graphics
-	|
-	|- exploratory/   # exploratory data analysis for study
-	| |- notebook/    # preliminary analyses
-	| +- scratch/     # temporary files that can be safely deleted or lost
-	|
-	+- Makefile       # executable Makefile for this study, if applicable
+-   here
+-   schtools
+-   tidyverse
 
+## Re-using this template
 
-### How to regenerate this repository
+If you re-use this template for a real project, you’ll need to fill in
+some information in the following files:
 
-#### Dependencies and locations
-* Gnu Make should be located in the user's PATH
-* mothur (v1.XX.0) should be located in the user's PATH
-* R (v. 3.X.X) should be located in the user's PATH
-* R packages:
-  * `knitr`
-  * `rmarkdown`
-* etc
+-   `LICENSE.md`
+    -   `YEAR`
+    -   `AUTHORS`
+    -   `FIRST_AUTHOR_LASTNAME`
+    -   `GITHUB_URL`
+-   `MiSeq-SOP-demo.Rproj` - rename this file to match your project.
+-   `paper/head.tex`
+    -   `RUNNING TITLE`
+    -   `FIRST AUTHOR LASTNAME`
+    -   `AUTHORS AND AFFILIATIONS`
+-   `paper/paper.Rmd`
+    -   `TITLE`
+    -   Write the actual text of your paper 🤓
+-   `paper/references.bib`
+    -   Export your references from Zotero (or other reference manager)
+        to this file.
+-   `README.Rmd`
+    -   `MiSeq-SOP-demo` - your project slug.
+    -   Change the text as you see fit to explain your project.
 
+## Directory Structure
 
-#### Running analysis
+    [01;34m.[00m
+    ├── LICENSE.md
+    ├── MiSeq-SOP-demo.Rproj
+    ├── README.Rmd
+    ├── README.md
+    ├── Snakefile
+    ├── [01;34mbenchmarks[00m
+    │   └── [01;34mmothur[00m
+    ├── [01;34mcode[00m
+    │   ├── [01;34mR[00m
+    │   ├── get_error.batch
+    │   ├── get_good_seqs.batch
+    │   ├── get_shared_otus.batch
+    │   └── [01;34mtests[00m
+    ├── [01;34mconfig[00m
+    │   ├── cluster.yaml
+    │   ├── config.yaml
+    │   └── [01;34mslurm[00m
+    ├── [01;34mdata[00m
+    │   ├── README.md
+    │   ├── [01;34mmothur[00m
+    │   ├── mouse.dpw.metadata
+    │   ├── mouse.time.design
+    │   ├── [01;34mprocessed[00m
+    │   ├── [01;34mraw[00m
+    │   ├── [01;34mreferences[00m
+    │   └── stability.files
+    ├── [01;34mexploratory[00m
+    │   └── README.md
+    ├── [01;34mfigures[00m
+    ├── [01;34mlog[00m
+    │   ├── [01;34mhpc[00m
+    │   └── [01;34mmothur[00m
+    ├── [01;34mpaper[00m
+    │   ├── head.tex
+    │   ├── mbio.csl
+    │   ├── paper.Rmd
+    │   ├── paper.log
+    │   ├── paper.md
+    │   ├── paper.pdf
+    │   ├── preamble.tex
+    │   └── references.bib
+    └── [01;34mresults[00m
+        ├── current_files.summary
+        ├── stability.opti_mcc.0.03.cons.tax.summary
+        ├── stability.opti_mcc.0.03.cons.taxonomy
+        ├── stability.opti_mcc.list
+        ├── stability.opti_mcc.sensspec
+        ├── stability.opti_mcc.shared
+        └── stability.opti_mcc.steps
 
-```
-git clone https://github.com/SchlossLab/LastName_BriefDescription_Journal_Year.git
-make write.paper
-```
+    19 directories, 30 files
