@@ -5,7 +5,7 @@
 All code included in this repository is made available under the
 [OSI][osi]-approved [MIT license][mit-license].
 
-Copyright (c) {[YEAR]} {[LIST_AUTHOR_NAMES]}
+Copyright (c) YEAR AUTHORS
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -46,8 +46,8 @@ license terms.
 Under the following terms:
 
 * **Attribution**---You must give appropriate credit (mentioning that your work
-  is derived from work that is Copyright © {[FIRST_AUTHOR_LASTNAME]} _et al._ 
-  and, where practical, linking to {[GITHUB_REPO_URL]}),
+  is derived from work that is Copyright © the FIRST_AUTHOR_LASTNAME _et al_.
+  and, where practical, linking to GITHUB_URL),
   provide a [link to the license][cc-by-human], and indicate if changes were
   made. You may do so in any reasonable manner, but not in any way that suggests
   the licensor endorses you or your use.
