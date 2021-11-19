@@ -28,9 +28,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install build dependencies
         run: |
-          Rscript -e "install.packages(c('knitr', 'styler','usethis', 'testthat', 'tidyverse', 'here'))"
+          Rscript -e "install.packages(c('styler','usethis', 'testthat', 'tidyverse', 'here'))"
           python -m pip install --upgrade pip
-          pip install black snakefmt
+          pip install black #snakefmt
       - name: Style R code
         run: |
           Rscript -e 'usethis::use_tidy_style()'
@@ -44,7 +44,7 @@ jobs:
       - name: Style Python code
         run: |
           black .
-          snakefmt .
+          #snakefmt .
           git add .
           git diff-index --quiet HEAD \
           || git commit \
