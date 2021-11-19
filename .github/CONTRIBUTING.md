@@ -1,4 +1,4 @@
-# Contributing to mikropml
+# Contributing to this project
 
 This document was adapted from the [Tidyverse Contributing guide](https://tidyverse.tidyverse.org/CONTRIBUTING.html).
 
@@ -16,21 +16,19 @@ If you’ve found a bug, please file an issue that illustrates the bug with a mi
 
 ### Pull request process
 
-*   Fork the package and clone onto your computer. If you haven't done this before, we recommend using `usethis::create_from_github("SchlossLab/mikropml", fork = TRUE)`.
+*   Fork the package and clone it onto your computer. 
 
-*   Install all development dependences with `devtools::install_dev_deps()`, and then make sure the package passes R CMD check by running `devtools::check()`. 
-    If R CMD check doesn't pass cleanly, it's a good idea to ask for help before continuing. 
+*   Install all dependencies listed in `README.md`
+
 *   Create a Git branch for your pull request (PR). We recommend using `usethis::pr_init("brief-description-of-change")`.
 
 *   Make your changes, commit to git, and then create a PR by running `usethis::pr_push()`, and following the prompts in your browser.
     The title of your PR should briefly describe the change.
     The body of your PR should contain `Fixes #issue-number`.
 
-*  For user-facing changes, add a bullet to the top of `NEWS.md` (i.e. just below the first header). Follow the style described in <https://style.tidyverse.org/news.html>.
-
 ### Code style
 
-*   New code should follow the tidyverse [style guide](https://style.tidyverse.org). 
+*   New R code should follow the tidyverse [style guide](https://style.tidyverse.org). 
     You can use the [styler](https://CRAN.R-project.org/package=styler) package to apply these styles, but please don't restyle code that has nothing to do with your PR.  
 
 *  We use [roxygen2](https://cran.r-project.org/package=roxygen2), with [Markdown syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html), for documentation.  
@@ -40,6 +38,6 @@ If you’ve found a bug, please file an issue that illustrates the bug with a mi
 
 ## Code of Conduct
 
-Please note that the mikropml project is released with a
+Please note that this project is released with a
 [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By contributing to this
 project you agree to abide by its terms.
