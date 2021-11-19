@@ -2,7 +2,7 @@ import os
 
 configfile: 'config/config.yaml'
 
-dataset = 'stability'
+dataset = config['dataset']
 procs = config['processors']
 seed = config['seed']
 dist_thresh = config['distance_threshold']
@@ -15,6 +15,8 @@ if os.path.exists("data/SRR_Acc_list.txt"):
 
 rule targets:
     input:
+        'paper/paper.pdf',
+        'README.md',
         'results/stability.opti_mcc.shared'
 
 
@@ -33,7 +35,20 @@ rule download_demo_data:
         """
 
 
-rule download_sra_data: # TODO: use fastq-dump to download from an SRR list
+rule download_sra_data: 
+    input:
+        txt="data/SRR_Acc_List.txt"
+    output:
+        fastq=expand("data/raw/{{SRA}}_{i}.fastq", i=(1,2))
+    params:
+        sra="{SRA}",
+        outdir="data/raw"
+    shell:
+        """
+        #source /etc/profile.d/http_proxy.sh  # required for internet on the Great Lakes cluster
+        prefetch {params.sra}
+        fasterq-dump --split-files {params.sra} -O {params.outdir}
+        """
 
 
 rule download_silva:
@@ -101,6 +116,7 @@ rule download_rdp:
 
 rule process_data:
     input:
+        #fastq=expand("data/raw/{SRA}_{i}.fastq", SRA = sra_list, i = [1,2]),
         silva_v4=rules.process_silva.output.v4,
         rdp_fasta=rules.download_rdp.output.fasta,
         rdp_tax=rules.download_rdp.output.tax
@@ -222,5 +238,14 @@ rule render_paper:
     output:
         pdf="paper/paper.pdf",
         md="paper/paper.md"
+    script:
+        "code/R/render-rmd.R"
+        
+rule render_readme:
+    input:
+        Rmd="README.Rmd",
+        R="code/R/render-rmd.R"
+    output:
+        md="README.md"
     script:
         "code/R/render-rmd.R"
