@@ -1,0 +1,75 @@
+---
+title: "TITLE"
+date: '`r Sys.Date()`'
+bibliography: references.bib
+link-citations: true
+output:
+  pdf_document:
+    includes:
+      in_header: preamble.tex
+      before_body: head.tex
+    fig_caption: yes
+  github_document:
+    html_preview: false
+csl: mbio.csl
+fontsize: 12pt
+geometry: margin=1.0in
+---
+
+```{r knitr_settings, eval=TRUE, echo=FALSE, cache=FALSE}
+schtools::set_knitr_opts()
+knitr::opts_knit$set(base.dir = here::here(), 
+                     base.url = "../")
+knitr::opts_chunk$set(fig.path = 'figures/',
+                      dpi = 300)
+```
+
+```{r deps, include=FALSE, message=FALSE}
+library(here)
+library(knitr)
+library(schtools)
+library(tidyverse)
+```
+
+## Abstract
+
+
+
+### Importance
+
+
+\newpage
+
+## Introduction
+
+
+
+## Results
+
+
+
+## Discussion
+
+
+
+## Materials and Methods
+
+
+
+### Data Processing Steps
+
+
+
+### Data and Code Availability
+
+
+
+## Acknowledgements
+
+
+
+## Author Contributions
+
+
+
+## References
