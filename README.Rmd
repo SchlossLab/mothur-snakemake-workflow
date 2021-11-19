@@ -50,8 +50,7 @@ information in the following files:
 - `paper/paper.Rmd`
     - `TITLE`
     - Write the actual text of your paper 🤓
-- `paper/references.bib`
-    - Export your references from Zotero (or other reference manager) to this file.
+- `paper/references.bib` - export your references from Zotero (or other reference manager) to this file.
 - `README.Rmd`
     - `MiSeq-SOP-demo` - your project slug.
     - Change the text as you see fit to explain your project.
@@ -59,7 +58,10 @@ information in the following files:
 
 ## Directory Structure
 
+TODO: fix the output. weird symbols inserted around directories probably 
+related to colorization?
+
 ```{bash tree, echo = FALSE, comment = ""}
-tree -L 2
+tree -L 2 -n
 ```
 
