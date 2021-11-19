@@ -1,33 +1,35 @@
 import os
 
-configfile: 'config/config.yaml'
 
-dataset = config['dataset']
-procs = config['processors']
-seed = config['seed']
-dist_thresh = config['distance_threshold']
-silva_version = config['silva_version']
+configfile: "config/config.yaml"
+
+
+dataset = config["dataset"]
+procs = config["processors"]
+seed = config["seed"]
+dist_thresh = config["distance_threshold"]
+silva_version = config["silva_version"]
 
 if os.path.exists("data/SRR_Acc_list.txt"):
-    with open(f"data/SRR_Acc_List.txt", 'r') as file:
+    with open(f"data/SRR_Acc_List.txt", "r") as file:
         sra_list = [line.strip() for line in file]
 
 
 rule targets:
     input:
-        'paper/paper.pdf',
-        'README.md',
-        'results/stability.opti_mcc.shared'
+        "paper/paper.pdf",
+        "README.md",
+        "results/stability.opti_mcc.shared",
 
 
 rule download_silva:
     output:
         tar=temp(f"data/references/silva.seed_v{silva_version}.tgz"),
-        fasta=temp(f'data/references/silva.seed_v{silva_version}.align'),
-        tax=temp(f'data/references/silva.seed_v{silva_version}.tax')
+        fasta=temp(f"data/references/silva.seed_v{silva_version}.align"),
+        tax=temp(f"data/references/silva.seed_v{silva_version}.tax"),
     params:
         outdir="data/references/",
-        silva_v=silva_version
+        silva_v=silva_version,
     shell:
         """
         #source /etc/profile.d/http_proxy.sh  # required for internet on the Great Lakes cluster
@@ -35,22 +37,23 @@ rule download_silva:
         tar xzvf {output.tar} -C {params.outdir}
         """
 
+
 rule process_silva:
     input:
         fasta=rules.download_silva.output.fasta,
-        tax=rules.download_silva.output.tax
+        tax=rules.download_silva.output.tax,
     output:
-        full='data/references/silva.seed.align',
-        v4='data/references/silva.v4.align'
+        full="data/references/silva.seed.align",
+        v4="data/references/silva.v4.align",
     params:
         silva_v=silva_version,
         workdir="data/references/",
         full=f"data/references/silva.seed_v{silva_version}.pick.align",
-        v4=f"data/references/silva.seed_v{silva_version}.pick.pcr.align"
+        v4=f"data/references/silva.seed_v{silva_version}.pick.pcr.align",
     log:
-        "log/mothur/get_silva.log"
+        "log/mothur/get_silva.log",
     resources:
-        procs=procs
+        procs=procs,
     shell:
         """
         mothur "#set.logfile(name={log});
@@ -63,16 +66,17 @@ rule process_silva:
         mv {params.v4} {output.v4}
         """
 
+
 rule download_rdp:
     output:
         tar=temp("data/references/trainset18_062020.pds.tgz"),
         fasta="data/references/rdp.fasta",
-        tax="data/references/rdp.tax"
+        tax="data/references/rdp.tax",
     params:
         outdir="data/references/",
         fasta="data/references/trainset18_062020.pds/trainset18_062020.pds.fasta",
         tax="data/references/trainset18_062020.pds/trainset18_062020.pds.tax",
-        url='https://mothur.s3.us-east-2.amazonaws.com/wiki/trainset18_062020.pds.tgz'
+        url="https://mothur.s3.us-east-2.amazonaws.com/wiki/trainset18_062020.pds.tgz",
     shell:
         """
         #source /etc/profile.d/http_proxy.sh  # required for internet on the Great Lakes cluster
@@ -83,10 +87,11 @@ rule download_rdp:
         rm -rf {params.outdir}/trainset18_*.pds/
         """
 
+
 checkpoint download_demo_data:
     output:
         zip=temp("data/miseqsopdata.zip"),
-        outdir=directory("data/raw/")
+        outdir=directory("data/raw/"),
     shell:
         """
         wget -N -P data/ https://mothur.s3.us-east-2.amazonaws.com/wiki/miseqsopdata.zip
@@ -97,14 +102,14 @@ checkpoint download_demo_data:
         """
 
 
-rule download_sra_data: # this will only run if you edit `process_data` to use these output files
+rule download_sra_data:  # this will only run if you edit `process_data` to use these output files
     input:
-        txt="data/SRR_Acc_List.txt"
+        txt="data/SRR_Acc_List.txt",
     output:
-        fastq=expand("data/raw/{{SRA}}_{i}.fastq", i=(1,2))
+        fastq=expand("data/raw/{{SRA}}_{i}.fastq", i=(1, 2)),
     params:
         sra="{SRA}",
-        outdir="data/raw"
+        outdir="data/raw",
     shell:
         """
         #source /etc/profile.d/http_proxy.sh  # required for internet on the Great Lakes cluster
@@ -116,9 +121,11 @@ rule download_sra_data: # this will only run if you edit `process_data` to use t
 def list_demo_fastq(wildcards):
     checkpoint_output = checkpoints.download_demo_data.get(**wildcards).output.outdir
     new_wildcards = glob_wildcards("data/raw/{sample}_L001_R{read}_001.fastq")
-    return expand("data/raw/{sample}_L001_R{read}_001.fastq", 
-                  sample = new_wildcards.sample,
-                  read = new_wildcards.read)
+    return expand(
+        "data/raw/{sample}_L001_R{read}_001.fastq",
+        sample=new_wildcards.sample,
+        read=new_wildcards.read,
+    )
 
 
 rule process_data:
@@ -127,27 +134,27 @@ rule process_data:
         fastq=list_demo_fastq,
         silva_v4=rules.process_silva.output.v4,
         rdp_fasta=rules.download_rdp.output.fasta,
-        rdp_tax=rules.download_rdp.output.tax
+        rdp_tax=rules.download_rdp.output.tax,
     output:
         files="data/mothur/{dataset}.files",
         filter="data/processed/{dataset}.filter",
         count_table="data/processed/{dataset}.count_table",
         tax="data/processed/{dataset}.tax",
-        fasta="data/processed/{dataset}.fasta"
+        fasta="data/processed/{dataset}.fasta",
     params:
-        inputdir='data/raw/',
+        inputdir="data/raw/",
         workdir="data/mothur/",
         files="data/mothur/{dataset}.paired.files",
         filter="data/mothur/{dataset}.filter",
         tax="data/mothur/{dataset}.trim.contigs.good.unique.good.filter.unique.precluster.pick.rdp.wang.pick.taxonomy",
         fasta="data/mothur/{dataset}.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta",
         count_table="data/mothur/{dataset}.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table",
-        trim_contigs='data/mothur/{dataset}.trim.contigs.fasta',
-        contigs_groups='data/mothur/{dataset}.contigs.groups'
+        trim_contigs="data/mothur/{dataset}.trim.contigs.fasta",
+        contigs_groups="data/mothur/{dataset}.contigs.groups",
     log:
-        "log/mothur/process_data_{dataset}.log"
+        "log/mothur/process_data_{dataset}.log",
     resources:
-        procs=procs
+        procs=procs,
     shell:
         """
         mothur '#set.logfile(name={log});
@@ -172,46 +179,48 @@ rule process_data:
         mv {params.tax} {output.tax}
         mv {params.fasta} {output.fasta}
         mv {params.count_table} {output.count_table}
-        
+
         """
+
 
 rule calc_dists:
     input:
-        fasta=rules.process_data.output.fasta
+        fasta=rules.process_data.output.fasta,
     output:
-        column="data/processed/{dataset}.dist"
+        column="data/processed/{dataset}.dist",
     params:
         outdir="data/processed/",
-        cutoff=dist_thresh
+        cutoff=dist_thresh,
     log:
-        "log/mothur/calc_dists_{dataset}.log"
+        "log/mothur/calc_dists_{dataset}.log",
     resources:
-        procs=procs
+        procs=procs,
     shell:
         """
         mothur '#set.logfile(name={log}); set.dir(output={params.outdir});
             dist.seqs(fasta={input.fasta}, cutoff={params.cutoff}, processors={resources.procs}) '
         """
 
+
 rule cluster_OTUs:
     input:
         dist=rules.calc_dists.output.column,
-        count_table=rules.process_data.output.count_table
+        count_table=rules.process_data.output.count_table,
     output:
         list="results/{dataset}.opti_mcc.list",
-        sensspec='results/{dataset}.opti_mcc.sensspec',
-        steps='results/{dataset}.opti_mcc.steps'
+        sensspec="results/{dataset}.opti_mcc.sensspec",
+        steps="results/{dataset}.opti_mcc.steps",
     params:
         outdir="results/",
         cutoff=dist_thresh,
         seed=seed,
-        procs=procs
+        procs=procs,
     log:
-        "log/mothur/cluster_{dataset}.log"
+        "log/mothur/cluster_{dataset}.log",
     benchmark:
         "benchmarks/mothur/cluster_{dataset}.txt"
     resources:
-        procs=procs
+        procs=procs,
     shell:
         """
         mothur '#set.logfile(name={log}); set.dir(output={params.outdir});
@@ -220,18 +229,19 @@ rule cluster_OTUs:
             cluster(column={input.dist}, count={input.count_table}, cutoff={params.cutoff}) '
         """
 
+
 rule get_shared:
     input:
         list=rules.cluster_OTUs.output.list,
         count_table=rules.process_data.output.count_table,
-        tax=rules.process_data.output.tax
+        tax=rules.process_data.output.tax,
     output:
-        shared='results/{dataset}.opti_mcc.shared'
+        shared="results/{dataset}.opti_mcc.shared",
     params:
-        outdir='results/',
-        label=dist_thresh
+        outdir="results/",
+        label=dist_thresh,
     log:
-        "log/mothur/get_shared_{dataset}.log"
+        "log/mothur/get_shared_{dataset}.log",
     shell:
         """
         mothur '#set.logfile(name={log}); set.dir(output={params.outdir});
@@ -239,22 +249,24 @@ rule get_shared:
             classify.otu(list=current, count=current, taxonomy={input.tax}, label={params.label}) '
         """
 
+
 rule render_paper:
     input:
         Rmd="paper/paper.Rmd",
-        R="code/R/render-rmd.R"
+        R="code/R/render-rmd.R",
     output:
         pdf="paper/paper.pdf",
-        md="paper/paper.md"
+        md="paper/paper.md",
     script:
         "code/R/render-rmd.R"
-        
+
+
 rule render_readme:
     input:
         Rmd="README.Rmd",
-        R="code/R/render-rmd.R"
+        R="code/R/render-rmd.R",
     output:
         md="README.md",
-        html=temp('README.html')
+        html=temp("README.html"),
     script:
         "code/R/render-rmd.R"
