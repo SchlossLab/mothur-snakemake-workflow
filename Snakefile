@@ -19,7 +19,7 @@ rule targets:
     input:
         "paper/paper.pdf",
         "README.md",
-        "results/stability.opti_mcc.groups.ave-std.summary",
+        #"results/stability.opti_mcc.groups.ave-std.summary",
 
 
 rule download_silva:
