@@ -19,7 +19,7 @@ rule targets:
     input:
         "paper/paper.pdf",
         "README.md",
-        "results/stability.opti_mcc.shared",
+        "results/stability.opti_mcc.groups.ave-std.summary",
 
 
 rule download_silva:
@@ -237,6 +237,7 @@ rule get_shared:
         tax=rules.process_data.output.tax,
     output:
         shared="results/{dataset}.opti_mcc.shared",
+        tax='results/{dataset}.opti_mcc.0.03.cons.taxonomy'
     params:
         outdir="results/",
         label=dist_thresh,
@@ -246,7 +247,33 @@ rule get_shared:
         """
         mothur '#set.logfile(name={log}); set.dir(output={params.outdir});
             make.shared(list={input.list}, count={input.count_table}, label={params.label});
-            classify.otu(list=current, count=current, taxonomy={input.tax}, label={params.label}) '
+            classify.otu(list=current, count=current, taxonomy={input.tax}, label={params.label});
+            count.groups(shared=current)
+            '
+        """
+
+
+rule calc_diversity:
+    input:
+        shared="results/{dataset}.opti_mcc.shared",#rules.get_shared.output.shared
+        tax='results/{dataset}.opti_mcc.0.03.cons.taxonomy'#rules.get_shared.output.tax,
+    output:
+        rare="results/{dataset}.opti_mcc.groups.rarefaction",
+        div="results/{dataset}.opti_mcc.groups.ave-std.summary"
+    params:
+        outdir='results/',
+        subsample_size=2400 # TODO: use result of count_groups to calc this
+    log:
+        "log/mothur/calc_diversity_{dataset}.log"
+    shell:
+        """
+        mothur "#set.logfile(name={log});
+        set.dir(output={params.outdir}, seed=19760620);
+        rename.file(taxonomy={input.tax}, shared={input.shared});
+        sub.sample(shared={input.shared}, size={params.subsample_size});
+        rarefaction.single(shared={input.shared}, calc=sobs, freq=100);
+        summary.single(shared={input.shared}, calc=nseqs-coverage-invsimpson-shannon-sobs, subsample={params.subsample_size})
+        "
         """
 
 
