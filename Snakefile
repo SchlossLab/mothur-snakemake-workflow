@@ -49,6 +49,7 @@ rule process_silva:
     output:
         full="data/references/silva.seed.align",
         v4="data/references/silva.v4.align",
+    conda: "envs/mothur.yaml",
     params:
         silva_v=silva_version,
         workdir="data/references/",
@@ -144,6 +145,7 @@ rule process_data:
         count_table="data/processed/{dataset}.count_table",
         tax="data/processed/{dataset}.tax",
         fasta="data/processed/{dataset}.fasta",
+    conda: "envs/mothur.yaml",
     params:
         inputdir="data/raw/",
         workdir="data/mothur/",
@@ -190,6 +192,7 @@ rule calc_dists:
         fasta=rules.process_data.output.fasta,
     output:
         column="data/processed/{dataset}.dist",
+    conda: "envs/mothur.yaml",
     params:
         outdir="data/processed/",
         cutoff=dist_thresh,
@@ -211,6 +214,7 @@ rule cluster_OTUs:
         list="results/{dataset}.opti_mcc.list",
         sensspec="results/{dataset}.opti_mcc.sensspec",
         steps="results/{dataset}.opti_mcc.steps",
+    conda: "envs/mothur.yaml",
     params:
         outdir="results/",
         cutoff=dist_thresh,
@@ -238,6 +242,7 @@ rule get_shared:
     output:
         shared="results/{dataset}.opti_mcc.shared",
         tax='results/{dataset}.opti_mcc.0.03.cons.taxonomy'
+    conda: "envs/mothur.yaml",
     params:
         outdir="results/",
         label=dist_thresh,
@@ -260,6 +265,7 @@ rule calc_diversity:
     output:
         rare="results/{dataset}.opti_mcc.groups.rarefaction",
         div="results/{dataset}.opti_mcc.groups.ave-std.summary"
+    conda: "envs/mothur.yaml",
     params:
         outdir='results/',
         subsample_size=2400 # TODO: use result of count_groups to calc this
@@ -284,6 +290,7 @@ rule render_paper:
     output:
         pdf="paper/paper.pdf",
         md="paper/paper.md",
+    conda: "envs/R.yaml",
     script:
         "code/R/render-rmd.R"
 
@@ -295,5 +302,6 @@ rule render_readme:
     output:
         md="README.md",
         html=temp("README.html"),
+    conda: "envs/R.yaml",
     script:
         "code/R/render-rmd.R"
