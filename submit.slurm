@@ -5,7 +5,7 @@
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --account=pschloss1
 #SBATCH --partition=standard
-#SBATCH --time=360:00:00
+#SBATCH --time=300:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
