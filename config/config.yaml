@@ -3,3 +3,13 @@ processors: 4
 distance_threshold: 0.03
 silva_version: 132
 seed: 20211129
+
+# An example of rule based resources
+# Specified in this config file and in the 
+# download_silva rule
+
+# download resources
+download_silva:
+  mem_mb: 4000
+  time_min: 360
+  threads: 1

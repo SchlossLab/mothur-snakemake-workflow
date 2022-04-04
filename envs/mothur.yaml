@@ -1,0 +1,7 @@
+name: mothur
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - mothur

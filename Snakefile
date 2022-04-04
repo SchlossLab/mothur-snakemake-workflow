@@ -30,6 +30,10 @@ rule download_silva:
     params:
         outdir="data/references/",
         silva_v=silva_version,
+    resources:
+        mem_mb=config["download_silva"]["mem_mb"],
+        time_min=config["download_silva"]["time_min"],
+    threads: config["download_silva"]["threads"],
     shell:
         """
         #source /etc/profile.d/http_proxy.sh  # required for internet on the Great Lakes cluster
@@ -45,6 +49,7 @@ rule process_silva:
     output:
         full="data/references/silva.seed.align",
         v4="data/references/silva.v4.align",
+    conda: "envs/mothur.yaml",
     params:
         silva_v=silva_version,
         workdir="data/references/",
@@ -52,15 +57,14 @@ rule process_silva:
         v4=f"data/references/silva.seed_v{silva_version}.pick.pcr.align",
     log:
         "log/mothur/get_silva.log",
-    resources:
-        procs=procs,
+    threads: procs
     shell:
         """
         mothur "#set.logfile(name={log});
                 set.dir(output={params.workdir}, input={params.workdir});
                 get.lineage(fasta={input.fasta}, taxonomy={input.tax}, taxon=Bacteria);
-                degap.seqs(fasta={params.full}, processors={resources.procs});
-                pcr.seqs(fasta={params.full}, start=11894, end=25319, keepdots=F, processors={resources.procs})
+                degap.seqs(fasta={params.full}, processors={threads});
+                pcr.seqs(fasta={params.full}, start=11894, end=25319, keepdots=F, processors={threads})
                 "
         mv {params.full} {output.full}
         mv {params.v4} {output.v4}
@@ -141,6 +145,7 @@ rule process_data:
         count_table="data/processed/{dataset}.count_table",
         tax="data/processed/{dataset}.tax",
         fasta="data/processed/{dataset}.fasta",
+    conda: "envs/mothur.yaml",
     params:
         inputdir="data/raw/",
         workdir="data/mothur/",
@@ -153,20 +158,19 @@ rule process_data:
         contigs_groups="data/mothur/{dataset}.contigs.groups",
     log:
         "log/mothur/process_data_{dataset}.log",
-    resources:
-        procs=procs,
+    threads: procs
     shell:
         """
         mothur '#set.logfile(name={log});
             set.dir(input={params.inputdir}, output={params.workdir});
             make.file(inputdir={params.inputdir}, type=fastq, prefix={wildcards.dataset});
             rename.file(input={params.files}, new={output.files});
-            make.contigs(inputdir={params.inputdir}, file={output.files}, processors={resources.procs});
+            make.contigs(inputdir={params.inputdir}, file={output.files}, processors={threads});
             set.dir(input={params.workdir}, output={params.workdir});
             screen.seqs(fasta={params.trim_contigs}, group={params.contigs_groups}, maxambig=0, maxlength=275, maxhomop=8);
             unique.seqs();
             count.seqs(name=current, group=current);
-            align.seqs(fasta=current, reference={input.silva_v4}, processors={resources.procs});
+            align.seqs(fasta=current, reference={input.silva_v4}, processors={threads});
             screen.seqs(fasta=current, count=current, start=1968, end=11550);
             filter.seqs(fasta=current, vertical=T, trump=.);
             unique.seqs(fasta=current, count=current);
@@ -188,17 +192,17 @@ rule calc_dists:
         fasta=rules.process_data.output.fasta,
     output:
         column="data/processed/{dataset}.dist",
+    conda: "envs/mothur.yaml",
     params:
         outdir="data/processed/",
         cutoff=dist_thresh,
     log:
         "log/mothur/calc_dists_{dataset}.log",
-    resources:
-        procs=procs,
+    threads: procs
     shell:
         """
         mothur '#set.logfile(name={log}); set.dir(output={params.outdir});
-            dist.seqs(fasta={input.fasta}, cutoff={params.cutoff}, processors={resources.procs}) '
+            dist.seqs(fasta={input.fasta}, cutoff={params.cutoff}, processors={threads}) '
         """
 
 
@@ -210,6 +214,7 @@ rule cluster_OTUs:
         list="results/{dataset}.opti_mcc.list",
         sensspec="results/{dataset}.opti_mcc.sensspec",
         steps="results/{dataset}.opti_mcc.steps",
+    conda: "envs/mothur.yaml",
     params:
         outdir="results/",
         cutoff=dist_thresh,
@@ -219,13 +224,12 @@ rule cluster_OTUs:
         "log/mothur/cluster_{dataset}.log",
     benchmark:
         "benchmarks/mothur/cluster_{dataset}.txt"
-    resources:
-        procs=procs,
+    threads: procs
     shell:
         """
         mothur '#set.logfile(name={log}); set.dir(output={params.outdir});
             set.seed(seed={params.seed});
-            set.current(processors={resources.procs});
+            set.current(processors={threads});
             cluster(column={input.dist}, count={input.count_table}, cutoff={params.cutoff}) '
         """
 
@@ -238,6 +242,7 @@ rule get_shared:
     output:
         shared="results/{dataset}.opti_mcc.shared",
         tax='results/{dataset}.opti_mcc.0.03.cons.taxonomy'
+    conda: "envs/mothur.yaml",
     params:
         outdir="results/",
         label=dist_thresh,
@@ -260,6 +265,7 @@ rule calc_diversity:
     output:
         rare="results/{dataset}.opti_mcc.groups.rarefaction",
         div="results/{dataset}.opti_mcc.groups.ave-std.summary"
+    conda: "envs/mothur.yaml",
     params:
         outdir='results/',
         subsample_size=2400 # TODO: use result of count_groups to calc this
@@ -284,6 +290,7 @@ rule render_paper:
     output:
         pdf="paper/paper.pdf",
         md="paper/paper.md",
+    conda: "envs/R.yaml",
     script:
         "code/R/render-rmd.R"
 
@@ -295,5 +302,6 @@ rule render_readme:
     output:
         md="README.md",
         html=temp("README.html"),
+    conda: "envs/R.yaml",
     script:
         "code/R/render-rmd.R"
