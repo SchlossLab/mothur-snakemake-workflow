@@ -19,9 +19,5 @@ source /etc/profile.d/http_proxy.sh
 source ~/miniconda3/etc/profile.d/conda.sh
 conda activate snakemake
 
-### This chunk changes directory to the directory from which it was submitted
-echo "Changing directory to $SLURM_SUBMIT_DIR"
-cd $SLURM_SUBMIT_DIR
-
 ### Run script
 snakemake --profile config/slurm
