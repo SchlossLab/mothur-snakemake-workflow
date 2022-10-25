@@ -1,6 +1,5 @@
 import os
 
-
 configfile: "config/config.yaml"
 
 
@@ -218,8 +217,7 @@ rule cluster_OTUs:
     params:
         outdir="results/",
         cutoff=dist_thresh,
-        seed=seed,
-        procs=procs,
+        seed=seed
     log:
         "log/mothur/cluster_{dataset}.log",
     benchmark:
@@ -286,22 +284,22 @@ rule calc_diversity:
 rule render_paper:
     input:
         Rmd="paper/paper.Rmd",
-        R="code/R/render-rmd.R",
+        R="workflow/scripts/R/render-rmd.R",
     output:
         pdf="paper/paper.pdf",
         md="paper/paper.md",
-    conda: "envs/R.yaml",
+    conda: "envs/Rtidy.yaml",
     script:
-        "code/R/render-rmd.R"
+        "../scripts/R/render-rmd.R"
 
 
 rule render_readme:
     input:
         Rmd="README.Rmd",
-        R="code/R/render-rmd.R",
+        R="workflow/scripts/R/render-rmd.R",
     output:
         md="README.md",
         html=temp("README.html"),
-    conda: "envs/R.yaml",
+    conda: "envs/Rtidy.yaml",
     script:
-        "code/R/render-rmd.R"
+        "../scripts/R/render-rmd.R"
