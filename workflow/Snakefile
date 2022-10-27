@@ -298,12 +298,23 @@ rule calc_diversity:
         "
         """
 
+rule plot_diversity:
+    input:
+        tsv=rules.calc_diversity.output.div,
+        R='workflow/scripts/plot_diversity.R'
+    output:
+        alpha='figures/{dataset}_alpha-diversity.pdf'
+    conda: 'envs/Rtidy.yaml'
+    log: 'log/plot_diversity_{dataset}.log'
+    script:
+        'scripts/plot_diversity.R'
+    
 
 rule render_paper:
     input:
         Rmd="paper/paper.Rmd",
         R="workflow/scripts/render_rmd.R",
-        div=expand(rules.calc_diversity.output.div, dataset = dataset)
+        figures=expand(rules.plot_diversity.output, dataset = dataset)
     output:
         pdf="paper/paper.pdf",
         md="paper/paper.md",

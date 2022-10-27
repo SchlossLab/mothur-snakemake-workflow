@@ -4,13 +4,15 @@ date: '`r Sys.Date()`'
 bibliography: references.bib
 link-citations: true
 output:
-  pdf_document:
+  bookdown::pdf_document2:
     includes:
       in_header: preamble.tex
       before_body: head.tex
-    fig_caption: yes
+    fig_caption: true
+    number_sections: false
+    toc: false
   github_document:
-    html_preview: false
+    html_preview: true
 csl: mbio.csl
 fontsize: 12pt
 geometry: margin=1.0in
@@ -19,8 +21,8 @@ geometry: margin=1.0in
 ```{r knitr_settings, eval=TRUE, echo=FALSE, cache=FALSE}
 schtools::set_knitr_opts()
 knitr::opts_knit$set(base.dir = here::here(), 
-                     base.url = "../")
-knitr::opts_chunk$set(fig.path = 'figures/',
+                     #base.url = "../",
+                     fig.path = 'figures/',
                       dpi = 300)
 ```
 
@@ -46,6 +48,7 @@ library(tidyverse)
 
 ## Results
 
+Example of referencing a figure in the text (Figure \@ref(fig:alpha-diversity)).
 
 
 ## Discussion
@@ -62,7 +65,8 @@ library(tidyverse)
 
 ### Data and Code Availability
 
-
+List all software and version numbers used and cite the corresponding papers or manuals.
+mothur vX.X [@schloss_introducing_2009]
 
 ## Acknowledgements
 
@@ -73,3 +77,21 @@ library(tidyverse)
 
 
 ## References
+
+\setlength{\parindent}{-0.25in}
+\setlength{\leftskip}{0.25in}
+\noindent
+
+<div id="refs"></div>
+
+\setlength{\parindent}{0in}
+\setlength{\leftskip}{0in}
+
+\newpage
+
+## Figures
+
+```{r alpha-diversity, fig.cap="**Alpha diversity.** The distribution of Shannon and Inverse Simpson indices for all mice."}
+include_graphics(here('figures/stability_alpha-diversity.pdf'))
+```
+

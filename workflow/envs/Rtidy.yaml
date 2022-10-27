@@ -4,6 +4,7 @@ channels:
   - r
 dependencies:
   - r-base=4
+  - r-bookdown
   - r-tidyverse
   - r-here
   - r-rmarkdown
