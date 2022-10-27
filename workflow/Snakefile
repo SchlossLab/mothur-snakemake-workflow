@@ -325,7 +325,7 @@ rule render_readme:
     input:
         Rmd="README.Rmd",
         R="workflow/scripts/render_rmd.R",
-        image='figures/rulegraph.png'
+        image='figures/rulegraph_demo.png'
     output:
         md="README.md",
         html=temp("README.html"),

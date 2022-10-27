@@ -47,10 +47,6 @@ some information in the following files:
   - `MiSeq-SOP-demo` - your project slug.
   - Change the text as you see fit to explain your project.
 
-## Workflow
-
-![rulegraph](figures/rulegraph.png)
-
 ## Directory Structure
 
     .
@@ -59,6 +55,7 @@ some information in the following files:
     ├── README.Rmd
     ├── config
     │   ├── README.md
+    │   ├── crc
     │   ├── demo.yaml
     │   └── slurm
     ├── data
@@ -68,8 +65,11 @@ some information in the following files:
     │   ├── raw
     │   └── references
     ├── figures
-    │   ├── dag.png
-    │   └── rulegraph.png
+    │   ├── dag_crc.png
+    │   ├── dag_demo.png
+    │   ├── rulegraph_crc.png
+    │   ├── rulegraph_demo.png
+    │   └── stability_alpha-diversity.pdf
     ├── log
     │   ├── hpc
     │   ├── mothur
@@ -78,6 +78,9 @@ some information in the following files:
     │   ├── head.tex
     │   ├── mbio.csl
     │   ├── paper.Rmd
+    │   ├── paper.log
+    │   ├── paper.md
+    │   ├── paper.pdf
     │   ├── preamble.tex
     │   └── references.bib
     ├── results
@@ -98,4 +101,10 @@ some information in the following files:
         ├── notebooks
         └── scripts
 
-    16 directories, 27 files
+    17 directories, 33 files
+
+## Workflow
+
+<!-- run workflow/scripts/plot_rulegraph_dag.sh to generate this -->
+
+![rulegraph](figures/rulegraph_demo.png)

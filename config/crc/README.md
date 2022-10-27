@@ -8,3 +8,13 @@ The full SRR Accession list is [SRR_Acc_list.txt](SRR_Acc_list.txt) with
 metadata in [SraRunTable.txt](SraRunTable.txt). The full dataset includes both
 bacterial and viral whole shotgun metagenomic data. Only the bacterial data are
 included in [SRR_ACC_list_metagen.txt](SRR_ACC_list_bact.txt).
+
+## Workflow
+
+### Rule graph
+
+![rulegraph](/figures/rulegraph_crc.png)
+
+### DAG
+
+![dag](/figures/dag_crc.png)

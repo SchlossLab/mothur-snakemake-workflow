@@ -56,17 +56,15 @@ information in the following files:
     - `MiSeq-SOP-demo` - your project slug.
     - Change the text as you see fit to explain your project.
 
-
-## Workflow
-
-```{bash rulegraph, echo = FALSE, eval = FALSE, message = FALSE}
-snakemake -n --rulegraph | dot -T png > figures/rulegraph.png
-```
-![rulegraph](figures/rulegraph.png)
-
 ## Directory Structure
 
 ```{bash tree, echo = FALSE, comment = ""}
 tree -L 2 -n
 ```
 
+
+## Workflow
+
+<!-- run workflow/scripts/plot_rulegraph_dag.sh to generate this -->
+
+![rulegraph](figures/rulegraph_demo.png)
