@@ -20,10 +20,12 @@ geometry: margin=1.0in
 
 ```{r knitr_settings, eval=TRUE, echo=FALSE, cache=FALSE}
 schtools::set_knitr_opts()
-knitr::opts_knit$set(base.dir = here::here(), 
-                     #base.url = "../",
-                     fig.path = 'figures/',
-                      dpi = 300)
+knitr::opts_knit$set(
+  base.dir = here::here(),
+  # base.url = "../",
+  fig.path = "figures/",
+  dpi = 300
+)
 ```
 
 ```{r deps, include=FALSE, message=FALSE}
@@ -92,6 +94,6 @@ mothur vX.X [@schloss_introducing_2009]
 ## Figures
 
 ```{r alpha-diversity, fig.cap="**Alpha diversity.** The distribution of Shannon and Inverse Simpson indices for all mice."}
-include_graphics(here('figures/stability_alpha-diversity.pdf'))
+include_graphics(here("figures/stability_alpha-diversity.pdf"))
 ```
 
