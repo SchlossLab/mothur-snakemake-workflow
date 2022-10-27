@@ -15,9 +15,6 @@ if srr_filename and os.path.exists(srr_filename):
     use_srr_list = True
     with open(srr_filename, "r") as file:
         sra_list = [line.strip() for line in file]
-    print(f"Using {srr_filename}")
-else:
-    print("Using MiSeq SOP demo data")
 
 
 rule targets:
@@ -328,6 +325,7 @@ rule render_readme:
     input:
         Rmd="README.Rmd",
         R="workflow/scripts/render_rmd.R",
+        image='figures/rulegraph.png'
     output:
         md="README.md",
         html=temp("README.html"),
