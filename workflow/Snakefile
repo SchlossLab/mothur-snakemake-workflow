@@ -302,7 +302,7 @@ rule calc_diversity:
 rule render_paper:
     input:
         Rmd="paper/paper.Rmd",
-        R="workflow/scripts/render-rmd.R",
+        R="workflow/scripts/render_rmd.R",
         div=expand(rules.calc_diversity.output.div, dataset = dataset)
     output:
         pdf="paper/paper.pdf",
@@ -310,17 +310,17 @@ rule render_paper:
     conda: "envs/Rtidy.yaml",
     log: "log/render_paper.log"
     script:
-        "scripts/render-rmd.R"
+        "scripts/render_rmd.R"
 
 
 rule render_readme:
     input:
         Rmd="README.Rmd",
-        R="workflow/scripts/render-rmd.R",
+        R="workflow/scripts/render_rmd.R",
     output:
         md="README.md",
         html=temp("README.html"),
     conda: "envs/Rtidy.yaml",
     log: "log/render_readme.log"
     script:
-        "scripts/render-rmd.R"
+        "scripts/render_rmd.R"
