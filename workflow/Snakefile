@@ -56,6 +56,8 @@ rule process_silva:
         workdir="data/references/",
         full=f"data/references/silva.seed_v{silva_version}.pick.align",
         v4=f"data/references/silva.seed_v{silva_version}.pick.pcr.align",
+        v4_start=11894,
+        v4_end=25319
     log:
         "log/mothur/get_silva.log",
     threads: procs
@@ -65,7 +67,7 @@ rule process_silva:
                 set.dir(output={params.workdir}, input={params.workdir});
                 get.lineage(fasta={input.fasta}, taxonomy={input.tax}, taxon=Bacteria);
                 degap.seqs(fasta={params.full}, processors={threads});
-                pcr.seqs(fasta={params.full}, start=11894, end=25319, keepdots=F, processors={threads})
+                pcr.seqs(fasta={params.full}, start={params.v4_start}, end={params.v4_end}, keepdots=F, processors={threads})
                 "
         mv {params.full} {output.full}
         mv {params.v4} {output.v4}
@@ -153,7 +155,6 @@ rule process_data:
         rdp_tax=rules.download_rdp.output.tax,
     output:
         files="data/mothur/{dataset}.files",
-        filter="data/processed/{dataset}.filter",
         count_table="data/processed/{dataset}.count_table",
         tax="data/processed/{dataset}.tax",
         fasta="data/processed/{dataset}.fasta",
@@ -162,14 +163,17 @@ rule process_data:
         inputdir="data/raw/",
         workdir="data/mothur/",
         files="data/mothur/{dataset}.paired.files",
-        filter="data/mothur/{dataset}.filter",
-        tax="data/mothur/{dataset}.trim.contigs.good.unique.good.filter.unique.precluster.pick.rdp.wang.pick.taxonomy",
-        fasta="data/mothur/{dataset}.trim.contigs.good.unique.good.filter.unique.precluster.pick.pick.fasta",
-        count_table="data/mothur/{dataset}.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table",
-        trim_contigs="data/mothur/{dataset}.trim.contigs.fasta",
-        contigs_groups="data/mothur/{dataset}.contigs.groups",
+        contigs_fna="data/mothur/{dataset}.trim.contigs.fasta",
+        contigs_count="data/mothur/{dataset}.contigs.count_table",
         screen_start=1968,
-        screen_end=11550
+        screen_end=11550,
+        maxambig=0,
+        maxlength=275,
+        maxhomop=8,
+        diffs=2,
+        tax="data/mothur/{dataset}.trim.contigs.unique.good.filter.unique.precluster.rdp.wang.pick.taxonomy",
+        fasta="data/mothur/{dataset}.trim.contigs.unique.good.filter.unique.precluster.fasta",
+        count_table="data/mothur/{dataset}.trim.contigs.unique.good.filter.unique.precluster.denovo.vsearch.count_table",
     log:
         "log/mothur/process_data_{dataset}.log",
     threads: procs
@@ -179,27 +183,23 @@ rule process_data:
             set.dir(input={params.inputdir}, output={params.workdir});
             make.file(inputdir={params.inputdir}, type=fastq, prefix={wildcards.dataset});
             rename.file(input={params.files}, new={output.files});
-            make.contigs(inputdir={params.inputdir}, file={output.files}, processors={threads});
+            make.contigs(inputdir={params.inputdir}, file={output.files}, processors={threads}, maxambig={params.maxambig}, maxlength={params.maxlength}, maxhomop={params.maxhomop});
             set.dir(input={params.workdir}, output={params.workdir});
-            screen.seqs(fasta={params.trim_contigs}, group={params.contigs_groups}, maxambig=0, maxlength=275, maxhomop=8);
-            unique.seqs();
-            count.seqs(name=current, group=current);
+            unique.seqs(fasta={params.contigs_fna}, count={params.contigs_count});
             align.seqs(fasta=current, reference={input.silva_v4}, processors={threads});
             screen.seqs(fasta=current, count=current, start={params.screen_start}, end={params.screen_end});
             filter.seqs(fasta=current, vertical=T, trump=.);
             unique.seqs(fasta=current, count=current);
-            pre.cluster(fasta=current, count=current, diffs=2);
-            chimera.uchime(fasta=current, count=current, dereplicate=T);
-            remove.seqs(fasta=current, accnos=current);
-            classify.seqs(fasta=current, count=current, reference={input.rdp_fasta}, taxonomy={input.rdp_tax}, cutoff=80);
-            remove.lineage(fasta=current, count=current, taxonomy=current, taxon=Chloroplast-Mitochondria-unknown-Archaea-Eukaryota) '
-        mv {params.filter} {output.filter}
+            pre.cluster(fasta=current, count=current, diffs={params.diffs});
+            chimera.vsearch(fasta=current, count=current, dereplicate=T);
+            classify.seqs(fasta=current, count=current, reference={input.rdp_fasta}, taxonomy={input.rdp_tax});
+            remove.lineage(fasta=current, count=current, taxonomy=current, taxon=Chloroplast-Mitochondria-unknown-Archaea-Eukaryota)
+            '
+        
         mv {params.tax} {output.tax}
         mv {params.fasta} {output.fasta}
         mv {params.count_table} {output.count_table}
-
         """
-
 
 rule calc_dists:
     input:
@@ -216,7 +216,8 @@ rule calc_dists:
     shell:
         """
         mothur '#set.logfile(name={log}); set.dir(output={params.outdir});
-            dist.seqs(fasta={input.fasta}, cutoff={params.cutoff}, processors={threads}) '
+            dist.seqs(fasta={input.fasta}, cutoff={params.cutoff}, processors={threads}) 
+            '
         """
 
 
@@ -243,7 +244,8 @@ rule cluster_OTUs:
         mothur '#set.logfile(name={log}); set.dir(output={params.outdir});
             set.seed(seed={params.seed});
             set.current(processors={threads});
-            cluster(column={input.dist}, count={input.count_table}, cutoff={params.cutoff}) '
+            cluster(column={input.dist}, count={input.count_table}, cutoff={params.cutoff}) 
+            '
         """
 
 
@@ -286,13 +288,13 @@ rule calc_diversity:
         "log/mothur/calc_diversity_{dataset}.log"
     shell:
         """
-        mothur "#set.logfile(name={log});
+        mothur '#set.logfile(name={log});
         set.dir(output={params.outdir}, seed=19760620);
         rename.file(taxonomy={input.tax}, shared={input.shared});
         sub.sample(shared={input.shared}, size={params.subsample_size});
         rarefaction.single(shared={input.shared}, calc=sobs, freq=100);
         summary.single(shared={input.shared}, calc=nseqs-coverage-invsimpson-shannon-sobs, subsample={params.subsample_size})
-        "
+        '
         """
 
 rule plot_diversity:
