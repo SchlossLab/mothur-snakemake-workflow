@@ -1,10 +1,10 @@
 name: Rtidy
 channels:
-  - r
   - conda-forge
-  - defaults
+  - r
 dependencies:
-  - r-base=4.1
+  - r-base=4
   - r-tidyverse
   - r-here
-  - r-schtools
+  - r-rmarkdown
+  - r-schtools>=0.3
