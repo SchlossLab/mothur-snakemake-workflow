@@ -11,5 +11,6 @@
 .snakemake/
 benchmarks/
 data/
-README.html
 paper/paper.html
+README.html
+results/
