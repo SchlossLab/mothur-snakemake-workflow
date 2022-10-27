@@ -1,23 +1,19 @@
 #!/bin/bash
-#SBATCH --job-name=smk-submit
-#SBATCH --output=%x-%j.out
-#SBATCH --mail-user=salucas@umich.edu
-#SBATCH --mail-type=BEGIN,END,FAIL
-#SBATCH --account=pschloss1
-#SBATCH --partition=standard
-#SBATCH --time=300:00:00
+
+#SBATCH --job-name=mothur-demo
+
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=2g
+#SBATCH --mem-per-cpu=100MB
+#SBATCH --time=96:00:00
 
-### Set Up Environment
-### Need to access the internet
-source /etc/profile.d/http_proxy.sh
+#SBATCH --output=log/hpc/slurm-%j_%x.out
 
-### Conda environment:
-source ~/miniconda3/etc/profile.d/conda.sh
-conda activate snakemake
+#SBATCH --account=YOUR_ACCOUNT_HERE
+#SBATCH --partition=standard
 
-### Run script
-snakemake --profile config/slurm
+#SBATCH --mail-user=YOUR_EMAIL_HERE
+#SBATCH --mail-type=BEGIN,END,FAIL
+
+snakemake --use-conda --profile config/slurm --latency-wait 90 --configfile config/demo.yaml
