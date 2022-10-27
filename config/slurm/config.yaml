@@ -1,10 +1,10 @@
 # cluster commands
 cluster: 
   # Make the hpc output folder for the rule
-  mkdir -p log/hpc/`date +"%d-%m-%y"`/{rule} &&
+  mkdir -p log/hpc/`date +"%Y-%m-%d"`/{rule} &&
   sbatch 
     --job-name=smk-{rule}-{wildcards}
-    --output log/hpc/`date +"%d-%m-%y"`/{rule}/{rule}-{wildcards}-%j.out 
+    --output log/hpc/`date +"%Y-%m-%d"`/{rule}/{rule}-{wildcards}-%j.out 
     --account=pschloss1
     --partition={resources.partition} 
     --time={resources.time_min} 
