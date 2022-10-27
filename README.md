@@ -92,6 +92,10 @@ some information in the following files:
 
 ## Workflow
 
+
+See [config/README.md](config/README.md) for instructions on configuring this workflow for your own dataset.
+
+
 <!-- run workflow/scripts/plot_rulegraph_dag.sh to generate this -->
 
 ![rulegraph](figures/rulegraph_demo.png)
