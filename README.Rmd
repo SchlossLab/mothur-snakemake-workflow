@@ -42,7 +42,7 @@ information in the following files:
     - `AUTHORS`
     - `FIRST_AUTHOR_LASTNAME`
     - `GITHUB_URL`
-- [MiSeq-SOP-demo.Rproj](MiSeq-SOP-demo.Rproj) - rename this file to match your project.
+- MiSeq-SOP-demo.Rproj - rename this file to match your project.
 - [paper/head.tex](paper/head.tex)
     - `RUNNING TITLE`
     - `FIRST AUTHOR LASTNAME`
@@ -51,16 +51,20 @@ information in the following files:
     - `TITLE`
     - Write the actual text of your paper. 🤓
 - [paper/references.bib](paper/references.bib) - export your references from Zotero (or other reference manager) to this bibtex file.
-- README.md - don't edit this by and, it's created by knitting [README.Rmd](README.Rmd).
+- README.md - don't edit this by hand, it's created by knitting [README.Rmd](README.Rmd).
 - [README.Rmd](README.Rmd).
     - `MiSeq-SOP-demo` - your project slug.
     - Change the text as you see fit to explain your project.
 
 
-## Directory Structure
+## Workflow
 
-TODO: fix the output. weird symbols inserted around directories probably 
-related to colorization?
+```{bash rulegraph, echo = FALSE, eval = FALSE, message = FALSE}
+snakemake -n --rulegraph | dot -T png > figures/rulegraph.png
+```
+![rulegraph](figures/rulegraph.png)
+
+## Directory Structure
 
 ```{bash tree, echo = FALSE, comment = ""}
 tree -L 2 -n
