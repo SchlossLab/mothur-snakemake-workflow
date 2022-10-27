@@ -1,3 +1,3 @@
 library(here)
 library(testthat)
-test_dir(here("code", "tests", "testthat"), stop_on_failure = TRUE)
+test_dir(here("workflow", "scripts", "tests", "testthat"), stop_on_failure = TRUE)
