@@ -78,30 +78,17 @@ some information in the following files:
     │   ├── head.tex
     │   ├── mbio.csl
     │   ├── paper.Rmd
-    │   ├── paper.log
     │   ├── paper.md
     │   ├── paper.pdf
     │   ├── preamble.tex
     │   └── references.bib
-    ├── results
-    │   ├── current_files.summary
-    │   ├── stability.opti_mcc.0.03.cons.tax.summary
-    │   ├── stability.opti_mcc.0.03.subsample.shared
-    │   ├── stability.opti_mcc.count.summary
-    │   ├── stability.opti_mcc.groups.ave-std.summary
-    │   ├── stability.opti_mcc.groups.rarefaction
-    │   ├── stability.opti_mcc.list
-    │   ├── stability.opti_mcc.sensspec
-    │   ├── stability.opti_mcc.shared
-    │   ├── stability.opti_mcc.steps
-    │   └── stability.taxonomy
     └── workflow
         ├── Snakefile
         ├── envs
         ├── notebooks
         └── scripts
 
-    17 directories, 33 files
+    16 directories, 21 files
 
 ## Workflow
 
