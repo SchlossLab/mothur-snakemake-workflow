@@ -258,8 +258,8 @@ rule get_shared:
 
 rule calc_diversity:
     input:
-        shared="results/{dataset}.opti_mcc.shared",#rules.get_shared.output.shared
-        tax='results/{dataset}.opti_mcc.0.03.cons.taxonomy'#rules.get_shared.output.tax,
+        shared=rules.get_shared.output.shared,
+        tax=rules.get_shared.output.tax,
     output:
         rare="results/{dataset}.opti_mcc.groups.rarefaction",
         div="results/{dataset}.opti_mcc.groups.ave-std.summary"
@@ -284,22 +284,23 @@ rule calc_diversity:
 rule render_paper:
     input:
         Rmd="paper/paper.Rmd",
-        R="workflow/scripts/R/render-rmd.R",
+        R="workflow/scripts/render-rmd.R",
+        div=expand(rules.calc_diversity.output.div, dataset = dataset)
     output:
         pdf="paper/paper.pdf",
         md="paper/paper.md",
     conda: "envs/Rtidy.yaml",
     script:
-        "../scripts/R/render-rmd.R"
+        "scripts/render-rmd.R"
 
 
 rule render_readme:
     input:
         Rmd="README.Rmd",
-        R="workflow/scripts/R/render-rmd.R",
+        R="workflow/scripts/render-rmd.R",
     output:
         md="README.md",
         html=temp("README.html"),
     conda: "envs/Rtidy.yaml",
     script:
-        "../scripts/R/render-rmd.R"
+        "scripts/render-rmd.R"
