@@ -40,7 +40,7 @@ jobs:
           --author="github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>" \
           -m '🎨  Style R code'
       - name: Test R code
-        run: Rscript code/tests/testthat.R
+        run: Rscript workflow/scripts/tests/testthat.R
       - name: Style Python code
         run: |
           black .
