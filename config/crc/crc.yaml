@@ -1,0 +1,17 @@
+dataset: "crc"
+srr_filename: "config/crc/SRR_ACC_list_bact.txt"
+processors: 4
+subsample_size: 10000
+distance_threshold: 0.03
+silva_version: 132
+seed: 20221027
+
+# An example of rule based resources
+# Specified in this config file and in the 
+# download_silva rule
+
+# download resources
+download_silva:
+  mem_mb: 4000
+  time_min: 360
+  threads: 1

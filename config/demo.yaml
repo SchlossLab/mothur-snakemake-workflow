@@ -1,5 +1,7 @@
-dataset: 'stability'
+dataset: "stability"
+srr_filename: "" # this is the SRR_Acc_list.txt downloaded from NCBI
 processors: 4
+subsample_size: 2400
 distance_threshold: 0.03
 silva_version: 132
 seed: 20211129

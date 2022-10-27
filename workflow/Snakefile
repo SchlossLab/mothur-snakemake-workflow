@@ -1,24 +1,29 @@
 import os
 
-configfile: "config/config.yaml"
-
+configfile: "config/demo.yaml"
 
 dataset = config["dataset"]
 procs = config["processors"]
-seed = config["seed"]
 dist_thresh = config["distance_threshold"]
+subsample_size = config["subsample_size"]
 silva_version = config["silva_version"]
+seed = config["seed"]
 
-if os.path.exists("data/SRR_Acc_list.txt"):
-    with open(f"data/SRR_Acc_List.txt", "r") as file:
+srr_filename = config['srr_filename']
+use_srr_list = False
+if srr_filename and os.path.exists(srr_filename):
+    use_srr_list = True
+    with open(srr_filename, "r") as file:
         sra_list = [line.strip() for line in file]
+    print(f"Using {srr_filename}")
+else:
+    print("Using MiSeq SOP demo data")
 
 
 rule targets:
     input:
         "paper/paper.pdf",
         "README.md",
-        #"results/stability.opti_mcc.groups.ave-std.summary",
 
 
 rule download_silva:
@@ -105,9 +110,9 @@ checkpoint download_demo_data:
         """
 
 
-rule download_sra_data:  # this will only run if you edit `process_data` to use these output files
+rule download_sra_data:
     input:
-        txt="data/SRR_Acc_List.txt",
+        txt=srr_filename,
     output:
         fastq=expand("data/raw/{{SRA}}_{i}.fastq", i=(1, 2)),
     params:
@@ -130,11 +135,22 @@ def list_demo_fastq(wildcards):
         read=new_wildcards.read,
     )
 
+def list_fastq_files(wildcards):
+    if use_srr_list:
+        fastq_files = expand("data/raw/{SRA}_{i}.fastq", SRA = sra_list, i = [1,2])
+    else:
+        checkpoint_output = checkpoints.download_demo_data.get(**wildcards).output.outdir
+        new_wildcards = glob_wildcards("data/raw/{sample}_L001_R{read}_001.fastq")
+        fastq_files = expand(
+            "data/raw/{sample}_L001_R{read}_001.fastq",
+            sample=new_wildcards.sample,
+            read=new_wildcards.read,
+        )
+    return fastq_files
 
 rule process_data:
     input:
-        #fastq=expand("data/raw/{SRA}_{i}.fastq", SRA = sra_list, i = [1,2]),
-        fastq=list_demo_fastq,
+        fastq=list_fastq_files, 
         silva_v4=rules.process_silva.output.v4,
         rdp_fasta=rules.download_rdp.output.fasta,
         rdp_tax=rules.download_rdp.output.tax,
@@ -155,6 +171,8 @@ rule process_data:
         count_table="data/mothur/{dataset}.trim.contigs.good.unique.good.filter.unique.precluster.denovo.uchime.pick.pick.count_table",
         trim_contigs="data/mothur/{dataset}.trim.contigs.fasta",
         contigs_groups="data/mothur/{dataset}.contigs.groups",
+        screen_start=1968,
+        screen_end=11550
     log:
         "log/mothur/process_data_{dataset}.log",
     threads: procs
@@ -170,7 +188,7 @@ rule process_data:
             unique.seqs();
             count.seqs(name=current, group=current);
             align.seqs(fasta=current, reference={input.silva_v4}, processors={threads});
-            screen.seqs(fasta=current, count=current, start=1968, end=11550);
+            screen.seqs(fasta=current, count=current, start={params.screen_start}, end={params.screen_end});
             filter.seqs(fasta=current, vertical=T, trump=.);
             unique.seqs(fasta=current, count=current);
             pre.cluster(fasta=current, count=current, diffs=2);
@@ -266,7 +284,7 @@ rule calc_diversity:
     conda: "envs/mothur.yaml",
     params:
         outdir='results/',
-        subsample_size=2400 # TODO: use result of count_groups to calc this
+        subsample_size=subsample_size # TODO: use result of count_groups to calc this
     log:
         "log/mothur/calc_diversity_{dataset}.log"
     shell:
@@ -290,6 +308,7 @@ rule render_paper:
         pdf="paper/paper.pdf",
         md="paper/paper.md",
     conda: "envs/Rtidy.yaml",
+    log: "log/render_paper.log"
     script:
         "scripts/render-rmd.R"
 
@@ -302,5 +321,6 @@ rule render_readme:
         md="README.md",
         html=temp("README.html"),
     conda: "envs/Rtidy.yaml",
+    log: "log/render_readme.log"
     script:
         "scripts/render-rmd.R"
