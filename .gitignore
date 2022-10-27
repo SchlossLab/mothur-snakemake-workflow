@@ -1,16 +1,27 @@
-*.docx
-*.log
-*.logfile
-*.out
-*temp*
+# dotfiles
 .DS_Store
 .history/
 .RData
 .Rhistory
 .Rproj.user
 .snakemake/
+
+# directories
 benchmarks/
 data/
+results/
+
+# extensions
+*.docx
+*.log
+*.logfile
+*.out
+
+# specific files
 paper/paper.html
 README.html
-results/
+*temp*
+
+# user files
+*_KLS*
+*_SKL*
