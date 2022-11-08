@@ -1,7 +1,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# MiSeq-SOP-demo
+# mothur-snakemake-workflow
+
+This example workflow implements the MiSeq SOP as a reproducible Snakemake workflow
 
 <!-- badges: start -->
 
