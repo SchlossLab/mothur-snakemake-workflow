@@ -11,7 +11,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# MiSeq-SOP-demo
+# mothur-snakemake-workflow <img src='figures/mothur-snakemake-workflow.png' align="right" height="139" />
+
+This example workflow implements the MiSeq SOP as a reproducible Snakemake workflow
 
 <!-- badges: start -->
 [![build](https://github.com/SchlossLab/MiSeq-SOP-demo/actions/workflows/build.yml/badge.svg)](https://github.com/SchlossLab/MiSeq-SOP-demo/actions/workflows/build.yml)
@@ -42,7 +44,7 @@ information in the following files:
     - `AUTHORS`
     - `FIRST_AUTHOR_LASTNAME`
     - `GITHUB_URL`
-- MiSeq-SOP-demo.Rproj - rename this file to match your project.
+- mothur-snakemake-workflow.Rproj - rename this file to match your project.
 - [paper/head.tex](paper/head.tex)
     - `RUNNING TITLE`
     - `FIRST AUTHOR LASTNAME`
@@ -53,7 +55,7 @@ information in the following files:
 - [paper/references.bib](paper/references.bib) - export your references from Zotero (or other reference manager) to this bibtex file.
 - README.md - don't edit this by hand, it's created by knitting [README.Rmd](README.Rmd).
 - [README.Rmd](README.Rmd).
-    - `MiSeq-SOP-demo` - your project slug.
+    - `mothur-snakemake-workflow` - your project slug.
     - Change the text as you see fit to explain your project.
 
 ## Directory Structure
@@ -64,6 +66,10 @@ tree -L 2 -n
 
 
 ## Workflow
+
+
+See [config/README.md](config/README.md) for instructions on configuring this workflow for your own dataset.
+
 
 <!-- run workflow/scripts/plot_rulegraph_dag.sh to generate this -->
 

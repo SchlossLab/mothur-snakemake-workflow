@@ -1,9 +1,10 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mothur-snakemake-workflow
+# mothur-snakemake-workflow <img src='figures/mothur-snakemake-workflow.png' align="right" height="139" />
 
-This example workflow implements the MiSeq SOP as a reproducible Snakemake workflow
+This example workflow implements the MiSeq SOP as a reproducible
+Snakemake workflow
 
 <!-- badges: start -->
 
@@ -33,7 +34,8 @@ some information in the following files:
   - `AUTHORS`
   - `FIRST_AUTHOR_LASTNAME`
   - `GITHUB_URL`
-- MiSeq-SOP-demo.Rproj - rename this file to match your project.
+- mothur-snakemake-workflow.Rproj - rename this file to match your
+  project.
 - [paper/head.tex](paper/head.tex)
   - `RUNNING TITLE`
   - `FIRST AUTHOR LASTNAME`
@@ -46,15 +48,15 @@ some information in the following files:
 - README.md - don’t edit this by hand, it’s created by knitting
   [README.Rmd](README.Rmd).
 - [README.Rmd](README.Rmd).
-  - `MiSeq-SOP-demo` - your project slug.
+  - `mothur-snakemake-workflow` - your project slug.
   - Change the text as you see fit to explain your project.
 
 ## Directory Structure
 
     .
     ├── LICENSE.md
-    ├── MiSeq-SOP-demo.Rproj
     ├── README.Rmd
+    ├── README.md
     ├── config
     │   ├── README.md
     │   ├── crc
@@ -62,20 +64,18 @@ some information in the following files:
     │   └── slurm
     ├── data
     │   ├── README.md
-    │   ├── miseqsopdata.zip
-    │   ├── mothur
-    │   ├── raw
-    │   └── references
+    │   └── mothur
     ├── figures
     │   ├── dag_crc.png
     │   ├── dag_demo.png
+    │   ├── mothur-snakemake-workflow.png
     │   ├── rulegraph_crc.png
     │   ├── rulegraph_demo.png
     │   └── stability_alpha-diversity.pdf
     ├── log
     │   ├── hpc
-    │   ├── mothur
-    │   └── render_readme.log
+    │   └── mothur
+    ├── mothur-snakemake-workflow.Rproj
     ├── paper
     │   ├── head.tex
     │   ├── mbio.csl
@@ -90,13 +90,12 @@ some information in the following files:
         ├── notebooks
         └── scripts
 
-    16 directories, 21 files
+    14 directories, 21 files
 
 ## Workflow
 
-
-See [config/README.md](config/README.md) for instructions on configuring this workflow for your own dataset.
-
+See [config/README.md](config/README.md) for instructions on configuring
+this workflow for your own dataset.
 
 <!-- run workflow/scripts/plot_rulegraph_dag.sh to generate this -->
 
