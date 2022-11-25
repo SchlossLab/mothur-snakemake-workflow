@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# mothur-snakemake-workflow <img src='figures/mothur-snakemake-workflow.png' align="right" height="139" />
+# mothur-snakemake-workflow <img src='figures/mothur-snakemake-workflow.png' align="right" height="120" />
 
 This example workflow implements the MiSeq SOP as a reproducible
 Snakemake workflow
