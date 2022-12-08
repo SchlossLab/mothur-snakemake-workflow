@@ -122,16 +122,6 @@ rule download_sra_data:
         fasterq-dump --split-files {params.sra} -O {params.outdir}
         """
 
-
-def list_demo_fastq(wildcards):
-    checkpoint_output = checkpoints.download_demo_data.get(**wildcards).output.outdir
-    new_wildcards = glob_wildcards("data/raw/{sample}_L001_R{read}_001.fastq")
-    return expand(
-        "data/raw/{sample}_L001_R{read}_001.fastq",
-        sample=new_wildcards.sample,
-        read=new_wildcards.read,
-    )
-
 def list_fastq_files(wildcards):
     if use_srr_list:
         fastq_files = expand("data/raw/{SRA}_{i}.fastq", SRA = sra_list, i = [1,2])
